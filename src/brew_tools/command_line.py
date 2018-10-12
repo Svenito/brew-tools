@@ -17,8 +17,17 @@ _logger = logging.getLogger(__name__)
 
 @click.group()
 @click.version_option(version=__version__)
-def main():
-    pass
+@click.option(
+    "-u",
+    "--unit",
+    help="Select units. Metric by default.",
+    type=click.Choice(['metric', 'imperial']),
+    default='metric'
+)
+@click.pass_context
+def main(ctx, unit):
+    ctx.ensure_object(dict)
+    ctx.obj['units'] = unit
 
 
 @main.command()
@@ -32,7 +41,8 @@ def main():
     type=float,
     help="Final Gravity as value between 1.000 and 1.200"
 )
-def abv(og, fg):
+@click.pass_context
+def abv(ctx, og, fg):
     if not og:
         og = utils.get_input("OG: ", lambda x: float(x),
                              utils.between(1.0, 1.2))
@@ -42,7 +52,6 @@ def abv(og, fg):
     if fg > og:
         print("Final gravity cannot be higher than original gravity")
         sys.exit(1)
-
     abv = (og - bm.adjust_gravity(og, fg)) * 131.25
     print(abv)
 
@@ -60,7 +69,11 @@ def abv(og, fg):
     help="Temperature of keg in F",
     prompt=True
 )
-def kegpsi(vol, temp):
+@click.pass_context
+def kegpsi(ctx, vol, temp):
+    if ctx.obj['units'] == 'metric':
+        temp = bm.c_to_f(temp)
+
     print(bm.keg_psi(temp, vol))
 
 
@@ -83,7 +96,12 @@ def kegpsi(vol, temp):
     help="Temperature of beer (F)",
     prompt=True
 )
-def prime(beer, co, temp):
+@click.pass_context
+def prime(ctx, beer, co, temp):
+    if ctx.obj['units'] == 'metric':
+        temp = bm.c_to_f(temp)
+        beer = bm.l_to_g(beer)
+
     sugar = bm.priming(temp, beer, co)
     print(sugar)
     print(sugar * 1.099421965317919)

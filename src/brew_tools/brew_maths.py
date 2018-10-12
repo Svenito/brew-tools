@@ -9,6 +9,18 @@ def g_to_oz(g):
     return g / 28.34952
 
 
+def c_to_f(c):
+    return c * 1.8 + 32.0
+
+
+def f_to_c(f):
+    return f / 1.8 - 32.0
+
+
+def l_to_g(l):
+    return l * 0.26417
+
+
 def to_brix(value):
     """
     Convert gravity value to brix value
