@@ -13,7 +13,7 @@ from brew_tools import command_line
 
 def test_abv():
     runner = CliRunner()
-    result = runner.invoke(command_line.main, 'abv --og 1.05 --fg 1.02')
+    result = runner.invoke(command_line.main, 'abv -og 1.05 -fg 1.02')
 
     assert result.exit_code == 0
     assert result.output == "Estimated ABV: 5.63%\n"
@@ -21,7 +21,7 @@ def test_abv():
 
 def test_abv_high_fg():
     runner = CliRunner()
-    result = runner.invoke(command_line.main, 'abv --og 1.05 --fg 1.06')
+    result = runner.invoke(command_line.main, 'abv -og 1.05 -fg 1.06')
 
     assert result.exit_code == 1
     assert result.output == "Final gravity cannot be higher than original gravity\n"
@@ -29,6 +29,20 @@ def test_abv_high_fg():
 
 def test_abv_range():
     runner = CliRunner()
-    result = runner.invoke(command_line.main, 'abv --og 2.0 --fg 1.06')
+    result = runner.invoke(command_line.main, 'abv -og 2.0 -fg 1.06')
     assert result.exit_code == 1
     assert result.output == "ERROR: Value must be between 1.0 and 1.2\n"
+
+
+def test_kegpsi():
+    runner = CliRunner()
+    result = runner.invoke(command_line.main, 'kegpsi -vol 2.0 -temp 15')
+    assert result.exit_code == 0
+    assert result.output == "Keg pressure required: 15.49psi\n"
+
+
+def test_kegpsi_imp():
+    runner = CliRunner()
+    result = runner.invoke(command_line.main, '-imperial kegpsi -vol 2.0 -temp 36')
+    assert result.exit_code == 0
+    assert result.output == "Keg pressure required: 5.27psi\n"
