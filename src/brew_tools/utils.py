@@ -1,6 +1,9 @@
 def between(min, max):
     def op(x):
-        return min < x and x < max
+        if min < x and x < max:
+            return True
+        print("ERROR: Value must be between {} and {}".format(min, max))
+        return False
     return op
 
 
@@ -17,7 +20,6 @@ def get_input(prompt, operation, check=None):
             if not check(value):
                 raise Exception
     except (ValueError, Exception):
-        print("ERROR: Value must be between 1.000 and 1.200")
         value = get_input(prompt, operation, check)
 
     return value

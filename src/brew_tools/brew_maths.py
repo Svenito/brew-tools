@@ -21,6 +21,14 @@ def l_to_g(l):
     return l * 0.26417
 
 
+def l_to_q(l):
+    return l * 1.056688
+
+
+def kg_to_lbs(kg):
+    return kg * 2.204623
+
+
 def to_brix(value):
     """
     Convert gravity value to brix value
@@ -41,7 +49,6 @@ def adjust_gravity(og, fg):
 def keg_psi(temp, co2):
     # From http://www.wetnewf.org/pdfs/Brewing_articles/CO2%20Volumes.pdf
     # V = (P + 14.695) * ( 0.01821 + 0.09011*EXP(-(T-32)/43.11) ) - 0.003342
-
     henry_coeff = 0.01821 + 0.09011 * math.exp(-(temp-32)/43.11)
     pressure = ((co2 + 0.003342) / henry_coeff) - 14.695
     return pressure
@@ -54,3 +61,12 @@ def priming(temp, beer_vol, co2):
     return (15.195 * beer_vol *
             (co2 - 3.0378 + (0.050062 * temp) -
              (0.00026555 * (temp ** 2))))
+
+
+def infusion(ratio, curr_temp, new_temp, water_temp, grain):
+    # http://howtobrew.com/book/section-3/the-methods-of-mashing/calculations-for-boiling-water-additions
+    # Wa = (T2 - T1)(.2G + Wm)/(Tw - T2)
+    mash_water = grain * ratio
+    return (((new_temp - curr_temp) *
+            (0.2 * grain + mash_water))/(water_temp - new_temp)
+            )

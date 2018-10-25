@@ -15,19 +15,27 @@ __license__ = "mit"
 _logger = logging.getLogger(__name__)
 
 
+UNITS = {"metric": {"temp": "C", "weight": "g", "vol": "liter"},
+         "imperial": {"temp": "F", "weight": "oz", "vol": "US Gal"}}
+
+
 @click.group()
 @click.version_option(version=__version__)
 @click.option(
-    "-u",
-    "--unit",
-    help="Select units. Metric by default.",
-    type=click.Choice(['metric', 'imperial']),
-    default='metric'
+    "-imperial",
+    help="Use imperial units. Metric by default.",
+    is_flag=True,
+    default=False
 )
 @click.pass_context
-def main(ctx, unit):
+def main(ctx, imperial):
     ctx.ensure_object(dict)
-    ctx.obj['units'] = unit
+    unit = "metric"
+    if imperial:
+        unit = "imperial"
+
+    ctx.obj['units'] = UNITS[unit]
+    ctx.obj['unit'] = unit
 
 
 @main.command()
@@ -43,69 +51,155 @@ def main(ctx, unit):
 )
 @click.pass_context
 def abv(ctx, og, fg):
+    valid_range = utils.between(1.0, 1.2)
+    if not valid_range(og) or not valid_range(fg):
+        sys.exit(1)
+
     if not og:
-        og = utils.get_input("OG: ", lambda x: float(x),
+        og = utils.get_input("Origianl Gravity: ", lambda x: float(x),
                              utils.between(1.0, 1.2))
     if not fg:
-        fg = utils.get_input("OG: ", lambda x: float(x),
+        fg = utils.get_input("Final Gravity: ", lambda x: float(x),
                              utils.between(1.0, 1.2))
+
     if fg > og:
         print("Final gravity cannot be higher than original gravity")
         sys.exit(1)
+
     abv = (og - bm.adjust_gravity(og, fg)) * 131.25
-    print(abv)
+    print("Estimated ABV: {0:.2f}%".format(abv))
 
 
 @main.command()
 @click.option(
     "-vol",
     type=float,
-    help="Desired volumes of CO2",
-    prompt=True
+    help="Desired volumes of CO2"
 )
 @click.option(
     "-temp",
     type=float,
-    help="Temperature of keg in F",
-    prompt=True
+    help="Temperature of keg"
 )
 @click.pass_context
 def kegpsi(ctx, vol, temp):
-    if ctx.obj['units'] == 'metric':
+    if not vol:
+        vol = utils.get_input("Desired volumes of CO2: ", lambda x: float(x))
+    if not temp:
+        unit = ctx.obj["units"]["temp"]
+        temp = utils.get_input("Temperature of keg ({}): ".format(unit),
+                               lambda x: float(x))
+
+    if ctx.obj['unit'] == 'metric':
         temp = bm.c_to_f(temp)
 
-    print(bm.keg_psi(temp, vol))
+    print("Keg pressure required: {0:.2f}psi".format(bm.keg_psi(temp, vol)))
 
 
 @main.command()
 @click.option(
     "-beer",
     type=float,
-    help="Volume of beer to prime (US Gal)",
-    prompt=True
+    help="Volume of beer to prime"
 )
 @click.option(
-    "-co",
+    "-vol",
     type=float,
-    help="Volume of CO2 required",
-    prompt=True
+    help="Volume of CO2 required"
 )
 @click.option(
     "-temp",
     type=float,
-    help="Temperature of beer (F)",
-    prompt=True
+    help="Temperature of beer"
 )
 @click.pass_context
-def prime(ctx, beer, co, temp):
-    if ctx.obj['units'] == 'metric':
+def prime(ctx, beer, vol, temp):
+    if not beer:
+        unit = ctx.obj["units"]["vol"]
+        beer = utils.get_input("Volume of beer to prime ({}): ".format(unit),
+                               lambda x: float(x))
+    if not vol:
+        vol = utils.get_input("Desired volumes of CO2: ", lambda x: float(x))
+
+    if not temp:
+        unit = ctx.obj["units"]["temp"]
+        temp = utils.get_input("Temperature of beer ({}): ".format(unit),
+                               lambda x: float(x))
+
+    if ctx.obj['unit'] == 'metric':
         temp = bm.c_to_f(temp)
         beer = bm.l_to_g(beer)
 
-    sugar = bm.priming(temp, beer, co)
-    print(sugar)
-    print(sugar * 1.099421965317919)
-    print(sugar * 1.4705202312138728)
+    sugar = bm.priming(temp, beer, vol)
+    if ctx.obj['unit'] == 'imperial':
+        sugar = bm.g_to_oz(sugar)
+
+    unit = ctx.obj["units"]["weight"]
+    print()
+    print("Table sugar: {0:.2f}{1}".format(sugar, unit))
+    print("Corn Sugar: {0:.2f}{1}".format(sugar * 1.099421965317919, unit))
+    print("DME: {0:.2f}{1}".format(sugar * 1.4705202312138728, unit))
+
+
+@main.command()
+@click.option(
+    "-temp",
+    type=float,
+    help="Current temperature of mash"
+)
+@click.option(
+    "-target",
+    type=float,
+    help="Target temperature of mash"
+)
+@click.option(
+    "-ratio",
+    type=float,
+    help="Grist/water ratio"
+)
+@click.option(
+    "-grain",
+    type=float,
+    help="Weight of grain in mash"
+)
+@click.option(
+    "-water",
+    type=float,
+    help="Temp of infusion water "
+)
+@click.pass_context
+def infuse(ctx, temp, target, ratio, grain, water):
+    if not temp:
+        unit = ctx.obj["units"]["temp"]
+        temp = utils.get_input("Current temperature of mash ({}): ".format(unit),
+                               lambda x: float(x))
+    if not target:
+        unit = ctx.obj["units"]["temp"]
+        target = utils.get_input("Target temperature of mash ({}): ".format(unit),
+                                 lambda x: float(x))
+    if not ratio:
+        unit = "Quarts/lbs"
+        if ctx.obj['unit'] == 'metric':
+            unit = "Liters/kg"
+
+        ratio = utils.get_input("Grist/water ratio: ({}) ".format(unit),
+                                lambda x: float(x))
+    if not grain:
+        unit = "lbs"
+        if ctx.obj['unit'] == 'metric':
+            unit = "kg"
+        grain = utils.get_input("Weight of grain in mash ({}): ".format(unit),
+                                lambda x: float(x))
+    if not water:
+        unit = ctx.obj["units"]["temp"]
+        water = utils.get_input("Temperature of infusion water ({}): ".format(unit),
+                                lambda x: float(x))
+
+    infusion = bm.infusion(ratio, temp, target, water, grain)
+
+    print("Infuse with {0:.2f} {1} @ {2}{3}"
+          .format(infusion, ctx.obj["units"]["vol"],
+                  water, ctx.obj["units"]["temp"]))
 
 
 def run():
