@@ -29,6 +29,9 @@ UNITS = {"metric": {"temp": "C", "weight": "g", "vol": "liter"},
 )
 @click.pass_context
 def main(ctx, imperial):
+    """
+
+    """
     ctx.ensure_object(dict)
     unit = "metric"
     if imperial:
