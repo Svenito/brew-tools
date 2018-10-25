@@ -60,3 +60,7 @@ def test_priming():
 def test_infusion():
     infuse_water = bm.infusion(1.5, 152, 168, 212, 10)
     assert infuse_water == pytest.approx(6.1818, 0.001)
+
+def test_abv():
+    abv = bm.abv(1.04, 1.01)
+    assert abv == pytest.approx(5.199, 0.001)
