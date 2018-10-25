@@ -9,8 +9,9 @@ def between(min, max):
 
 def get_input(prompt, operation, check=None):
     """
-    Prompt the user for a gravity input. Converts input to float and checks
-    bounds of 1.000 and 1.200.
+    Prompt the user for input and apply ``operation`` to input.
+    If ``check`` is not None run the check on the converted input
+
     If value is invalid it will re-prompt user
     """
     try:
