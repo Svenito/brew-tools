@@ -46,3 +46,33 @@ def test_kegpsi_imp():
     result = runner.invoke(command_line.main, '-imperial kegpsi -vol 2.0 -temp 36')
     assert result.exit_code == 0
     assert result.output == "Keg pressure required: 5.27psi\n"
+
+
+def test_prime():
+    runner = CliRunner()
+    result = runner.invoke(command_line.main, 'prime -beer 19 -vol 2.2 -temp 15')
+    assert result.exit_code == 0
+    assert result.output == "\nTable sugar: 90.87g\nCorn Sugar: 99.91g\nDME: 133.63g\n"
+
+
+def test_prime_imperial():
+    runner = CliRunner()
+    result = runner.invoke(command_line.main, '-imperial prime -beer 5 -vol 2.2 -temp 68')
+    assert result.exit_code == 0
+    assert result.output == "\nTable sugar: 3.59oz\nCorn Sugar: 3.94oz\nDME: 5.27oz\n"
+
+
+def test_infuse():
+    runner = CliRunner()
+    result = runner.invoke(command_line.main,
+                          'infuse -temp 66 -target 70 -ratio 1 -grain 5 -water 100')
+    assert result.exit_code == 0
+    assert result.output == "Infuse with 0.80 liters @ 100.0C\n"
+
+
+def test_imperial():
+    runner = CliRunner()
+    result = runner.invoke(command_line.main,
+                          '-imperial infuse -temp 152 -target 168 -ratio 1.5 -grain 10 -water 212')
+    assert result.exit_code == 0
+    assert result.output == "Infuse with 6.18 quarts @ 212.0F\n"

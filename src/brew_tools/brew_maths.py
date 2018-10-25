@@ -14,11 +14,15 @@ def c_to_f(c):
 
 
 def f_to_c(f):
-    return f / 1.8 - 32.0
+    return 0.55 * (f - 32.0)
 
 
 def l_to_g(l):
     return l * 0.26417
+
+
+def g_to_l(g):
+    return g / 0.26417
 
 
 def l_to_q(l):

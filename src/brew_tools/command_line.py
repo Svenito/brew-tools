@@ -196,9 +196,11 @@ def infuse(ctx, temp, target, ratio, grain, water):
                                 lambda x: float(x))
 
     infusion = bm.infusion(ratio, temp, target, water, grain)
-
+    unit = "quarts"
+    if ctx.obj['unit'] == 'metric':
+            unit = "liters"
     print("Infuse with {0:.2f} {1} @ {2}{3}"
-          .format(infusion, ctx.obj["units"]["vol"],
+          .format(infusion, unit,
                   water, ctx.obj["units"]["temp"]))
 
 
