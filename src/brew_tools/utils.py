@@ -1,4 +1,7 @@
 def between(min, max):
+    """
+    Returns a function to test if a value lies between min and max
+    """
     def op(x):
         if min < x and x < max:
             return True
