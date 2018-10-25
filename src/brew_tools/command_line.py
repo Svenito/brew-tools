@@ -15,8 +15,10 @@ __license__ = "mit"
 _logger = logging.getLogger(__name__)
 
 
-UNITS = {"metric": {"temp": "C", "weight": "g", "vol": "liter"},
-         "imperial": {"temp": "F", "weight": "oz", "vol": "US Gal"}}
+UNITS = {"metric": {"temp": "C", "weight": "g",
+                    "lrg_weight": "kg", "vol": "liter"},
+         "imperial": {"temp": "F", "weight": "oz",
+                      "lrg_weight": "lbs", "vol": "US Gal"}}
 
 
 @click.group()
@@ -57,15 +59,15 @@ def abv(ctx, og, fg):
     Calculates the ABV from the original and final gravity readings
     """
     valid_range = utils.between(1.0, 1.2)
-    if not valid_range(og) or not valid_range(fg):
-        sys.exit(1)
-
     if not og:
-        og = utils.get_input("Origianl Gravity: ", lambda x: float(x),
-                             utils.between(1.0, 1.2))
+        og = utils.get_input("Original Gravity: ", lambda x: float(x),
+                             valid_range)
     if not fg:
         fg = utils.get_input("Final Gravity: ", lambda x: float(x),
-                             utils.between(1.0, 1.2))
+                             valid_range)
+
+    if not valid_range(og) or not valid_range(fg):
+        sys.exit(1)
 
     if fg > og:
         print("Final gravity cannot be higher than original gravity")
@@ -201,17 +203,18 @@ def infuse(ctx, temp, target, ratio, grain, water):
         ratio = utils.get_input("Grist/water ratio: ({}) ".format(unit),
                                 lambda x: float(x))
     if not grain:
-        unit = "lbs"
-        if ctx.obj['unit'] == 'metric':
-            unit = "kg"
+        unit = ctx.obj["units"]["lrg_weight"]
         grain = utils.get_input("Weight of grain in mash ({}): ".format(unit),
                                 lambda x: float(x))
     if not water:
         unit = ctx.obj["units"]["temp"]
         water = utils.get_input("Temperature of infusion water ({}): ".format(unit),
                                 lambda x: float(x))
+    try:
+        infusion = bm.infusion(ratio, temp, target, water, grain)
+    except ZeroDivisionError:
+        infusion = 0
 
-    infusion = bm.infusion(ratio, temp, target, water, grain)
     unit = "quarts"
     if ctx.obj['unit'] == 'metric':
             unit = "liters"

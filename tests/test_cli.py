@@ -52,14 +52,20 @@ def test_prime():
     runner = CliRunner()
     result = runner.invoke(command_line.main, 'prime -beer 19 -vol 2.2 -temp 15')
     assert result.exit_code == 0
-    assert result.output == "\nTable sugar: 90.87g\nCorn Sugar: 99.91g\nDME: 133.63g\n"
+    assert result.output == ("\nUse only one of the following:\n"
+                             "Table sugar: 90.87g\n"
+                             "Corn Sugar: 99.91g\n"
+                             "DME: 133.63g\n")
 
 
 def test_prime_imperial():
     runner = CliRunner()
     result = runner.invoke(command_line.main, '-imperial prime -beer 5 -vol 2.2 -temp 68')
     assert result.exit_code == 0
-    assert result.output == "\nTable sugar: 3.59oz\nCorn Sugar: 3.94oz\nDME: 5.27oz\n"
+    assert result.output == ("\nUse only one of the following:\n"
+                             "Table sugar: 3.59oz\n"
+                             "Corn Sugar: 3.94oz\n"
+                             "DME: 5.27oz\n")
 
 
 def test_infuse():
