@@ -66,8 +66,7 @@ def abv(ctx, og, fg):
         print("Final gravity cannot be higher than original gravity")
         sys.exit(1)
 
-    abv = (og - bm.adjust_gravity(og, fg)) * 131.25
-    print("Estimated ABV: {0:.2f}%".format(abv))
+    print("Estimated ABV: {0:.2f}%".format(bm.abv(og, fg)))
 
 
 @main.command()

@@ -50,6 +50,10 @@ def adjust_gravity(og, fg):
     return adjusted_fg
 
 
+def abv(og, fg):
+    return (og - adjust_gravity(og, fg)) * 131.25
+
+
 def keg_psi(temp, co2):
     # From http://www.wetnewf.org/pdfs/Brewing_articles/CO2%20Volumes.pdf
     # V = (P + 14.695) * ( 0.01821 + 0.09011*EXP(-(T-32)/43.11) ) - 0.003342
