@@ -2,4 +2,4 @@
 Contributors
 ============
 
-* Sven Steinbauer <sven@themill.com>
+* Sven Steinbauer <sven@unlogic.co.uk>

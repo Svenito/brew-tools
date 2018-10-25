@@ -30,7 +30,6 @@ UNITS = {"metric": {"temp": "C", "weight": "g", "vol": "liter"},
 @click.pass_context
 def main(ctx, imperial):
     """
-
     """
     ctx.ensure_object(dict)
     unit = "metric"
@@ -54,6 +53,9 @@ def main(ctx, imperial):
 )
 @click.pass_context
 def abv(ctx, og, fg):
+    """
+    Calculates the ABV from the original and final gravity readings
+    """
     valid_range = utils.between(1.0, 1.2)
     if not valid_range(og) or not valid_range(fg):
         sys.exit(1)
@@ -85,6 +87,9 @@ def abv(ctx, og, fg):
 )
 @click.pass_context
 def kegpsi(ctx, vol, temp):
+    """
+    Calculates the regulator pressure required to achieve desired CO2 volumes.
+    """
     if not vol:
         vol = utils.get_input("Desired volumes of CO2: ", lambda x: float(x))
     if not temp:
@@ -116,6 +121,10 @@ def kegpsi(ctx, vol, temp):
 )
 @click.pass_context
 def prime(ctx, beer, vol, temp):
+    """
+    Calculates the amount of table sugar, corn sugar, or DME needed to achieve
+    the requested CO2 volumes
+    """
     if not beer:
         unit = ctx.obj["units"]["vol"]
         beer = utils.get_input("Volume of beer to prime ({}): ".format(unit),
@@ -138,6 +147,7 @@ def prime(ctx, beer, vol, temp):
 
     unit = ctx.obj["units"]["weight"]
     print()
+    print("Use only one of the following:")
     print("Table sugar: {0:.2f}{1}".format(sugar, unit))
     print("Corn Sugar: {0:.2f}{1}".format(sugar * 1.099421965317919, unit))
     print("DME: {0:.2f}{1}".format(sugar * 1.4705202312138728, unit))
@@ -171,6 +181,10 @@ def prime(ctx, beer, vol, temp):
 )
 @click.pass_context
 def infuse(ctx, temp, target, ratio, grain, water):
+    """
+    Given the current mash temperature, work out how much water of a given
+    temp needs to be added to adjust the temperature
+    """
     if not temp:
         unit = ctx.obj["units"]["temp"]
         temp = utils.get_input("Current temperature of mash ({}): ".format(unit),

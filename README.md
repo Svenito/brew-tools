@@ -98,10 +98,6 @@ run the tests with
 
     pytest tests
 
-Issues
-======
-
-Any bugs and feature requests should be filed in the issue tracker
 
 Thanks
 ======
