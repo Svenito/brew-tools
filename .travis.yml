@@ -3,7 +3,7 @@ language: python
 python:
     - "3.6"
 install:
-    - pip install setuptools>=38.3
+    - pip install "setuptools>=38.3"
     - pip install ".[testing]"
 script:
     - pytest
