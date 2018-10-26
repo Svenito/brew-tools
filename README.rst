@@ -8,7 +8,7 @@ brew-tools
      ) _ ( )   / ) _) \ /\ /    )( (  O )(  O )/ (_/\\___ \
     (____/(__\_)(____)(_/\_)   (__) \__/  \__/ \____/(____/
 
-|Build Status| |Documentation Status|
+|Build Status| |Documentation Status| |PyPI version|
 
 A command line utility that offers a set of calculators for home
 brewers.
@@ -34,8 +34,13 @@ More to come
 Installation
 ============
 
-Currently there is no PyPI package for brewtools, but you can
-clone/download this repository and install it using pip
+Brew-tools is available from PyPI
+
+::
+
+    pip install brew-tools
+
+You can also clone/download this repository and install it using pip
 
 ::
 
@@ -121,3 +126,5 @@ See ``LICENSE.txt`` for more details
    :target: https://travis-ci.com/Svenito/brew-tools
 .. |Documentation Status| image:: https://readthedocs.org/projects/brew-tools/badge/?version=latest
    :target: https://brew-tools.readthedocs.io/en/latest/?badge=latest
+.. |PyPI version| image:: https://badge.fury.io/py/brew-tools.svg
+   :target: https://badge.fury.io/py/brew-tools

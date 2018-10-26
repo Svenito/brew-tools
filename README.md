@@ -10,6 +10,7 @@ brew-tools
 
 [![Build Status](https://travis-ci.com/Svenito/brew-tools.svg?branch=master)](https://travis-ci.com/Svenito/brew-tools)
 [![Documentation Status](https://readthedocs.org/projects/brew-tools/badge/?version=latest)](https://brew-tools.readthedocs.io/en/latest/?badge=latest)
+[![PyPI version](https://badge.fury.io/py/brew-tools.svg)](https://badge.fury.io/py/brew-tools)
 
 A command line utility that offers a set of calculators for home brewers.
 
