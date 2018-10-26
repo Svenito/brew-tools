@@ -2,13 +2,13 @@ language: python
 
 python:
     - "3.6"
-  install:
+install:
     - pip install ".[testing]"
-  script:
+script:
     - pytest
 
 
 branches:
   only:
-    - master
-    - dev
+  - master
+  - dev
