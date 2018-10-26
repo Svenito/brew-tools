@@ -49,7 +49,7 @@ Brew tools has built in help
 
 ::
 
-    Usage: brew_tools [OPTIONS] COMMAND [ARGS]...
+    Usage: brew-tools [OPTIONS] COMMAND [ARGS]...
 
     Options:
     --version  Show the version and exit.
@@ -66,8 +66,8 @@ and also for its commands
 
 ::
 
-    brew_tools infuse --help
-    Usage: brew_tools infuse [OPTIONS]
+    brew-tools infuse --help
+    Usage: brew-tools infuse [OPTIONS]
 
     Options:
       -temp FLOAT    Current temperature of mash

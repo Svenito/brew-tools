@@ -36,8 +36,11 @@ More to come
 Installation
 ============
 
-Currently there is no PyPI package for brewtools, but you can clone/download
-this repository and install it using pip
+Brew-tools is available from PyPI
+
+    pip install brew-tools
+
+You can also clone/download this repository and install it using pip
 
     cd <brew-tools-dir>
     pip install .
@@ -48,7 +51,7 @@ Usage
 Brew tools has built in help
 
 ```
-Usage: brew_tools [OPTIONS] COMMAND [ARGS]...
+Usage: brew-tools [OPTIONS] COMMAND [ARGS]...
 
 Options:
 --version  Show the version and exit.
@@ -65,8 +68,8 @@ prime
 and also for its commands
 
 ```
-brew_tools infuse --help
-Usage: brew_tools infuse [OPTIONS]
+brew-tools infuse --help
+Usage: brew-tools infuse [OPTIONS]
 
 Options:
   -temp FLOAT    Current temperature of mash
