@@ -14,6 +14,12 @@ def g_to_oz(g):
     """
     return g / 28.34952
 
+def lbs_to_oz(lbs):
+    """
+    Convert lbs to ounces
+    """
+    return lbs * 16
+
 
 def c_to_f(c):
     """
@@ -141,3 +147,14 @@ def infusion(ratio, curr_temp, new_temp, water_temp, grain):
     return (((new_temp - curr_temp) *
             (0.2 * grain + mash_water))/(water_temp - new_temp)
             )
+
+def pre_boil_dme(points, cur_vol):
+    """
+    Calcualate the amount of DME needed to raise the gravity of a
+    given volume of wort by a given number or gravity points. Assumes
+    DME has an extract of 1.044ppg.
+
+    :arg points: Number of gravity points to raise
+    :arg cur_vol: The current volume of the wort in gallons.
+    """
+    return lbs_to_oz(points * (1 / (44 / cur_vol)))

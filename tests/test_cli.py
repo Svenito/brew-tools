@@ -86,3 +86,17 @@ def test_imperial():
                             "-ratio 1.5 -grain 10 -water 212"))
     assert result.exit_code == 0
     assert result.output == "Infuse with 6.18 quarts @ 212.0F\n"
+
+def test_dme():
+    runner = CliRunner()
+    result = runner.invoke(command_line.main,
+                           (" dme -points 5 -vol 12.3"))
+    assert result.exit_code == 0
+    assert result.output == "Add 167.48g of DME to raise the wort gravity by 5 points\n"
+
+def test_dme_imperial():
+    runner = CliRunner()
+    result = runner.invoke(command_line.main,
+                           ("-imperial dme -points 5 -vol 3.25"))
+    assert result.exit_code == 0
+    assert result.output == "Add 5.91oz of DME to raise the wort gravity by 5 points\n"
