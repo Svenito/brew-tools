@@ -222,11 +222,13 @@ def infuse(ctx, temp, target, ratio, grain, water):
           .format(infusion, unit,
                   water, ctx.obj["units"]["temp"]))
 
+
 @main.command()
 @click.option(
     "-points",
     type=int,
-    help="Points needed to acheive target gravity (e.x. current gravity 1.045, target 1.050, points=5)"
+    help=("Points needed to acheive target gravity "
+          "(e.x. current gravity 1.045, target 1.050, points=5)")
 )
 @click.option(
     "-vol",
@@ -236,9 +238,17 @@ def infuse(ctx, temp, target, ratio, grain, water):
 @click.pass_context
 def dme(ctx, points, vol):
     """
-    Given the current volume of the mash, work out how much Dry Malt Extract(DME) to add
-    to reach your target gravity
+    Given the current volume of the mash, work out how much Dry Malt
+    Extract(DME) to add to reach your target gravity
     """
+    if not points:
+        points = utils.get_input("Points needed to achieve target gravity: ",
+                                 lambda x: float(x))
+    if not vol:
+        unit = ctx.obj["units"]["vol"]
+        vol = utils.get_input("Current volume of the wort ({}): ".format(unit),
+                              lambda x: float(x))
+
     if ctx.obj['unit'] == 'metric':
         vol = bm.l_to_g(vol)
 
@@ -247,7 +257,9 @@ def dme(ctx, points, vol):
     if ctx.obj['unit'] == 'metric':
         amt_dme = bm.oz_to_g(amt_dme)
 
-    print("Add {0:.2f}{1} of DME to raise the wort gravity by {2} points".format(amt_dme, ctx.obj["units"]["weight"], points))
+    print("Add {0:.2f}{1} of DME to raise the wort gravity by {2} points"
+          .format(amt_dme, ctx.obj["units"]["weight"], points))
+
 
 def run():
     main()

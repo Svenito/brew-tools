@@ -2,4 +2,5 @@
 Contributors
 ============
 
-* Sven Steinbauer <sven@unlogic.co.uk>
+* Sven Steinbauer <https://github.com/Svenito>
+* SlayterDev <https://github.com/SlayterDev>

@@ -31,6 +31,7 @@ Currently brew-tools includes:
 * Keg priming calculator
 * Priming sugar calculator
 * Quick infusion calculator
+* Adjust gravity with dme calculator
 
 More to come
 
@@ -64,6 +65,7 @@ abv
 infuse
 kegpsi
 prime
+dme
 ```
 
 and also for its commands
@@ -109,6 +111,7 @@ Thanks
 Thanks to
 
 * /u/DAMNIT_REZNO - for inspiring me to start this project
+* SlayterDev - DME addition calculator
 
 License
 =======

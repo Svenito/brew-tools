@@ -14,6 +14,7 @@ def g_to_oz(g):
     """
     return g / 28.34952
 
+
 def lbs_to_oz(lbs):
     """
     Convert lbs to ounces
@@ -102,7 +103,7 @@ def keg_psi(temp, co2):
 
     V = (P + 14.695) * ( 0.01821 + 0.09011*EXP(-(T-32)/43.11) ) - 0.003342
     """
-    henry_coeff = 0.01821 + 0.09011 * math.exp(-(temp-32)/43.11)
+    henry_coeff = 0.01821 + 0.09011 * math.exp(-(temp - 32) / 43.11)
     pressure = ((co2 + 0.003342) / henry_coeff) - 14.695
     return pressure
 
@@ -145,8 +146,9 @@ def infusion(ratio, curr_temp, new_temp, water_temp, grain):
     """
     mash_water = grain * ratio
     return (((new_temp - curr_temp) *
-            (0.2 * grain + mash_water))/(water_temp - new_temp)
+            (0.2 * grain + mash_water)) / (water_temp - new_temp)
             )
+
 
 def pre_boil_dme(points, cur_vol):
     """
