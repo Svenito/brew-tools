@@ -1,0 +1,14 @@
+language: python
+
+python:
+    - "3.6"
+  install:
+    - pip install ".[testing]"
+  script:
+    - pytest
+
+
+branches:
+  only:
+  - master
+  - dev
