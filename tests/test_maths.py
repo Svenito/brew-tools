@@ -12,6 +12,9 @@ def test_g_to_oz():
     oz = bm.g_to_oz(34)
     assert oz == pytest.approx(1.199, 0.001)
 
+def test_lbs_to_oz():
+    oz = bm.lbs_to_oz(2)
+    assert oz == pytest.approx(32, 0.01)
 
 def test_c_to_f():
     f = bm.c_to_f(28)
@@ -64,3 +67,7 @@ def test_infusion():
 def test_abv():
     abv = bm.abv(1.04, 1.01)
     assert abv == pytest.approx(5.199, 0.001)
+
+def test_pre_boil_dme():
+    dme = bm.pre_boil_dme(5, 3.25)
+    assert dme == pytest.approx(5.91, 0.01)
