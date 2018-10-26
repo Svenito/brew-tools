@@ -78,10 +78,6 @@ Options:
 If the inputs are not passed via the command line arguments, brew tools will
 prompt the user for input.
 
-Here's an example of using brew tools:
-
-[ ASCIINEMA CAST]
-
 Development
 ===========
 

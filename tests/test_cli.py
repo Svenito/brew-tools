@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import pytest
-
 __author__ = "Sven Steinbauer"
 __copyright__ = "Sven Steinbauer"
 __license__ = "mit"
@@ -24,7 +22,8 @@ def test_abv_high_fg():
     result = runner.invoke(command_line.main, 'abv -og 1.05 -fg 1.06')
 
     assert result.exit_code == 1
-    assert result.output == "Final gravity cannot be higher than original gravity\n"
+    assert result.output == ("Final gravity cannot be higher "
+                             "than original gravity\n")
 
 
 def test_abv_range():
@@ -43,14 +42,16 @@ def test_kegpsi():
 
 def test_kegpsi_imp():
     runner = CliRunner()
-    result = runner.invoke(command_line.main, '-imperial kegpsi -vol 2.0 -temp 36')
+    result = runner.invoke(command_line.main,
+                           '-imperial kegpsi -vol 2.0 -temp 36')
     assert result.exit_code == 0
     assert result.output == "Keg pressure required: 5.27psi\n"
 
 
 def test_prime():
     runner = CliRunner()
-    result = runner.invoke(command_line.main, 'prime -beer 19 -vol 2.2 -temp 15')
+    result = runner.invoke(command_line.main,
+                           'prime -beer 19 -vol 2.2 -temp 15')
     assert result.exit_code == 0
     assert result.output == ("\nUse only one of the following:\n"
                              "Table sugar: 90.87g\n"
@@ -60,7 +61,8 @@ def test_prime():
 
 def test_prime_imperial():
     runner = CliRunner()
-    result = runner.invoke(command_line.main, '-imperial prime -beer 5 -vol 2.2 -temp 68')
+    result = runner.invoke(command_line.main,
+                           '-imperial prime -beer 5 -vol 2.2 -temp 68')
     assert result.exit_code == 0
     assert result.output == ("\nUse only one of the following:\n"
                              "Table sugar: 3.59oz\n"
@@ -71,7 +73,8 @@ def test_prime_imperial():
 def test_infuse():
     runner = CliRunner()
     result = runner.invoke(command_line.main,
-                          'infuse -temp 66 -target 70 -ratio 1 -grain 5 -water 100')
+                           ("infuse -temp 66 -target 70 -ratio 1 "
+                            "-grain 5 -water 100"))
     assert result.exit_code == 0
     assert result.output == "Infuse with 0.80 liters @ 100.0C\n"
 
@@ -79,6 +82,7 @@ def test_infuse():
 def test_imperial():
     runner = CliRunner()
     result = runner.invoke(command_line.main,
-                          '-imperial infuse -temp 152 -target 168 -ratio 1.5 -grain 10 -water 212')
+                           ("-imperial infuse -temp 152 -target 168 "
+                            "-ratio 1.5 -grain 10 -water 212"))
     assert result.exit_code == 0
     assert result.output == "Infuse with 6.18 quarts @ 212.0F\n"
