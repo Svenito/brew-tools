@@ -8,6 +8,8 @@ brew-tools
 (____/(__\_)(____)(_/\_)   (__) \__/  \__/ \____/(____/
 ```
 
+[![Build Status](https://travis-ci.com/Svenito/brew-tools.svg?branch=master)](https://travis-ci.com/Svenito/brew-tools)
+[![Documentation Status](https://readthedocs.org/projects/brew-tools/badge/?version=latest)](https://brew-tools.readthedocs.io/en/latest/?badge=latest)
 
 A command line utility that offers a set of calculators for home brewers.
 
@@ -77,6 +79,8 @@ Options:
 
 If the inputs are not passed via the command line arguments, brew tools will
 prompt the user for input.
+
+For more information see the [documentation](https://brew-tools.readthedocs.io/en/latest/)
 
 Development
 ===========
