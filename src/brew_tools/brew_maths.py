@@ -74,10 +74,8 @@ def to_brix(value):
 
 def to_plato(sg):
     # (-1 * 616.868) + (1111.14 * sg) – (630.272 * sg^2) + (135.997 * sg^3)
-    plato = (
-             (-1 * 616.868) + (1111.14 * sg) -
-             (630.272 * sg**2) + (135.997 * sg**3)
-            )
+    plato = ((-1 * 616.868) + (1111.14 * sg) -
+             (630.272 * sg**2) + (135.997 * sg**3))
     return plato
 
 
@@ -169,4 +167,3 @@ def pre_boil_dme(points, cur_vol):
     :arg cur_vol: The current volume of the wort in gallons.
     """
     return lbs_to_oz(points * (1 / (44 / cur_vol)))
-
