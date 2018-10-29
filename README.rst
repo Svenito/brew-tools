@@ -13,6 +13,13 @@ brew-tools
 A command line utility that offers a set of calculators for home
 brewers.
 
+.. note::
+
+    All values and calculations are provided as guidelines only.
+    Brew-tools should not be used for professional brewing. No warranty
+    or guarantee of accuracy is provided on the information provided by
+    this calculator.
+
 Description
 ===========
 

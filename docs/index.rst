@@ -50,6 +50,13 @@ It is written in Python 3 and has minimal dependencies on external packages.
 
 Brew-tools is opensource and contributions and suggestions are welcomed.
 
+.. note::
+
+    All values and calculations are provided as guidelines only.
+    Brew-tools should not be used for professional brewing. No warranty
+    or guarantee of accuracy is provided on the information provided by
+    this calculator.
+
 Contents
 ========
 
