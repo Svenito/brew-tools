@@ -58,15 +58,14 @@ def abv(ctx, og, fg):
     """
     Calculates the ABV from the original and final gravity readings
     """
-    valid_range = utils.between(1.0, 1.2)
     if not og:
-        og = utils.get_input("Original Gravity: ", lambda x: float(x),
-                             valid_range)
+        og = utils.get_gravity_input("Original Gravity: ")
     if not fg:
-        fg = utils.get_input("Final Gravity: ", lambda x: float(x),
-                             valid_range)
+        fg = utils.get_gravity_input("Final Gravity: ")
 
+    valid_range = utils.between(1.0, 1.2)
     if not valid_range(og) or not valid_range(fg):
+        print("Gravity values must be between 1.0 and 1.2")
         sys.exit(1)
 
     if fg > og:
@@ -128,9 +127,7 @@ def prime(ctx, beer, vol, temp):
     the requested CO2 volumes
     """
     if not beer:
-        unit = ctx.obj["units"]["vol"]
-        beer = utils.get_input("Volume of beer to prime ({}): ".format(unit),
-                               lambda x: float(x))
+        beer = utils.get_vol_input(ctx, "Volume of beer to prime")
     if not vol:
         vol = utils.get_input("Desired volumes of CO2: ", lambda x: float(x))
 
@@ -245,9 +242,7 @@ def dme(ctx, points, vol):
         points = utils.get_input("Points needed to achieve target gravity: ",
                                  lambda x: float(x))
     if not vol:
-        unit = ctx.obj["units"]["vol"]
-        vol = utils.get_input("Current volume of the wort ({}): ".format(unit),
-                              lambda x: float(x))
+        vol = utils.get_vol_input(ctx, "Current volume of the wort")
 
     if ctx.obj['unit'] == 'metric':
         vol = bm.l_to_g(vol)

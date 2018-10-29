@@ -27,3 +27,18 @@ def get_input(prompt, operation, check=None):
         value = get_input(prompt, operation, check)
 
     return value
+
+
+def get_vol_input(ctx, prompt):
+    unit = ctx.obj["units"]["vol"]
+    prompt = "{prompt} ({units}) :".format(prompt=prompt, units=unit)
+    vol = get_input(prompt, lambda x: float(x))
+
+    return vol
+
+
+def get_gravity_input(ctx, prompt):
+    valid_range = between(1.0, 1.2)
+    og = get_input(prompt, lambda x: float(x), valid_range)
+
+    return og
