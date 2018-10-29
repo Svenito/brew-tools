@@ -65,7 +65,6 @@ def abv(ctx, og, fg):
 
     valid_range = utils.between(1.0, 1.2)
     if not valid_range(og) or not valid_range(fg):
-        print("Gravity values must be between 1.0 and 1.2")
         sys.exit(1)
 
     if fg > og:
