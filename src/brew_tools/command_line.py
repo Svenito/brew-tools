@@ -5,7 +5,7 @@ import sys
 import logging
 
 from brew_tools import __version__
-from brew_tools import utils
+from brew_tools import inputs
 import brew_tools.brew_maths as bm
 
 __author__ = "Sven Steinbauer"
@@ -62,12 +62,12 @@ def abv(ctx, og, fg):
     # click options so that it is possible to add units to the end of the
     # prompt based on the requested unit format.
     if not og:
-        og = utils.get_gravity_input("Original Gravity: ")
+        og = inputs.get_gravity_input("Original Gravity: ")
     if not fg:
-        fg = utils.get_gravity_input("Final Gravity: ")
+        fg = inputs.get_gravity_input("Final Gravity: ")
 
     # If passed in via options we need to check valid range
-    valid_range = utils.between(1.0, 1.2)
+    valid_range = inputs.between(1.0, 1.2)
     if not valid_range(og) or not valid_range(fg):
         sys.exit(1)
 
@@ -95,12 +95,12 @@ def kegpsi(ctx, vol, temp):
     Calculates the regulator pressure required to achieve desired CO2 volumes.
     """
     if not vol:
-        vol = utils.get_input("Desired volumes of CO2: ", lambda x: float(x))
+        vol = inputs.get_input("Desired volumes of CO2: ", lambda x: float(x))
     if not temp:
-        temp = utils.get_unit_input(ctx.obj["units"]["temp"],
-                                    "Temperature of keg")
+        temp = inputs.get_unit_input(ctx.obj["units"]["temp"],
+                                     "Temperature of keg")
 
-    if utils.is_metric(ctx):
+    if inputs.is_metric(ctx):
         temp = bm.c_to_f(temp)
 
     print("Keg pressure required: {0:.2f}psi".format(bm.keg_psi(temp, vol)))
@@ -129,20 +129,20 @@ def prime(ctx, beer, vol, temp):
     the requested CO2 volumes for bottle priming
     """
     if not beer:
-        beer = utils.get_unit_input(ctx.obj["units"]["vol"],
-                                    "Volume of beer to prime")
+        beer = inputs.get_unit_input(ctx.obj["units"]["vol"],
+                                     "Volume of beer to prime")
     if not vol:
-        vol = utils.get_input("Desired volumes of CO2: ", lambda x: float(x))
+        vol = inputs.get_input("Desired volumes of CO2: ", lambda x: float(x))
     if not temp:
-        temp = temp = utils.get_unit_input(ctx.obj["units"]["temp"],
-                                           "Temperature of beer")
+        temp = temp = inputs.get_unit_input(ctx.obj["units"]["temp"],
+                                            "Temperature of beer")
 
-    if utils.is_metric(ctx):
+    if inputs.is_metric(ctx):
         temp = bm.c_to_f(temp)
         beer = bm.l_to_g(beer)
 
     sugar = bm.priming(temp, beer, vol)
-    if utils.is_imperial(ctx):
+    if inputs.is_imperial(ctx):
         sugar = bm.g_to_oz(sugar)
 
     unit = ctx.obj["units"]["weight"]
@@ -187,29 +187,29 @@ def infuse(ctx, temp, target, ratio, grain, water):
     """
     temp_unit = ctx.obj["units"]["temp"]
     if not temp:
-        temp = temp = utils.get_unit_input(temp_unit,
-                                           "Current temperature of mash")
+        temp = temp = inputs.get_unit_input(temp_unit,
+                                            "Current temperature of mash")
     if not target:
-        target = utils.get_unit_input(temp_unit,
-                                      "Target temperature of mash")
+        target = inputs.get_unit_input(temp_unit,
+                                       "Target temperature of mash")
     if not ratio:
         unit = "Quarts/lbs"
-        if utils.is_metric(ctx):
+        if inputs.is_metric(ctx):
             unit = "Liters/kg"
-        ratio = utils.get_unit_input(unit, "Grist/water ratio")
+        ratio = inputs.get_unit_input(unit, "Grist/water ratio")
     if not grain:
-        grain = utils.get_unit_input(ctx.obj["units"]["lrg_weight"],
-                                     "Weight of grain in mash")
+        grain = inputs.get_unit_input(ctx.obj["units"]["lrg_weight"],
+                                      "Weight of grain in mash")
     if not water:
-        water = utils.get_unit_input(ctx.obj["units"]["temp"],
-                                     "Temperature of infusion water")
+        water = inputs.get_unit_input(ctx.obj["units"]["temp"],
+                                      "Temperature of infusion water")
     try:
         infusion = bm.infusion(ratio, temp, target, water, grain)
     except ZeroDivisionError:
         infusion = 0
 
     unit = "quarts"
-    if utils.is_metric(ctx):
+    if inputs.is_metric(ctx):
         unit = "liters"
     print("Infuse with {0:.2f} {1} @ {2}{3}"
           .format(infusion, unit, water, temp_unit))
@@ -234,18 +234,18 @@ def dme(ctx, points, vol):
     Extract(DME) to add to reach your target gravity
     """
     if not points:
-        points = utils.get_input("Points needed to achieve target gravity: ",
-                                 lambda x: float(x))
+        points = inputs.get_input("Points needed to achieve target gravity: ",
+                                  lambda x: float(x))
     if not vol:
-        vol = utils.get_unit_input(ctx.obj["units"]["temp"],
-                                   "Current volume of the wort")
+        vol = inputs.get_unit_input(ctx.obj["units"]["temp"],
+                                    "Current volume of the wort")
 
-    if utils.is_metric(ctx):
+    if inputs.is_metric(ctx):
         vol = bm.l_to_g(vol)
 
     amt_dme = bm.pre_boil_dme(points, vol)
 
-    if utils.is_metric(ctx):
+    if inputs.is_metric(ctx):
         amt_dme = bm.oz_to_g(amt_dme)
 
     print("Add {0:.2f}{1} of DME to raise the wort gravity by {2} points"
