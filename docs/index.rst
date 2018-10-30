@@ -2,7 +2,14 @@
 brew-tools
 ==========
 
-This is the documentation of **brew-tools**.
+This is the documentation for
+
+::
+
+    ╔╗ ╦═╗╔═╗╦ ╦  ╔╦╗╔═╗╔═╗╦  ╔═╗
+    ╠╩╗╠╦╝║╣ ║║║───║ ║ ║║ ║║  ╚═╗
+    ╚═╝╩╚═╚═╝╚╩╝   ╩ ╚═╝╚═╝╩═╝╚═╝
+
 
 .. note::
 

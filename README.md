@@ -2,10 +2,9 @@ brew-tools
 ==========
 
 ```
- ____  ____  ____  _  _    ____  __    __   __    ____
-(  _ \(  _ \(  __)/ )( \  (_  _)/  \  /  \ (  )  / ___)
- ) _ ( )   / ) _) \ /\ /    )( (  O )(  O )/ (_/\\___ \
-(____/(__\_)(____)(_/\_)   (__) \__/  \__/ \____/(____/
+╔╗ ╦═╗╔═╗╦ ╦  ╔╦╗╔═╗╔═╗╦  ╔═╗
+╠╩╗╠╦╝║╣ ║║║───║ ║ ║║ ║║  ╚═╗
+╚═╝╩╚═╚═╝╚╩╝   ╩ ╚═╝╚═╝╩═╝╚═╝
 ```
 
 [![Build Status](https://travis-ci.com/Svenito/brew-tools.svg?branch=master)](https://travis-ci.com/Svenito/brew-tools)
@@ -51,7 +50,6 @@ You can also clone/download this repository and install it using pip
 
 Usage
 =====
-
 
 Brew tools has built in help
 
