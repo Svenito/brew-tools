@@ -1,3 +1,11 @@
+def is_metric(ctx):
+    return ctx.obj['unit'] == 'metric'
+
+
+def is_imperial(ctx):
+    return not is_metric(ctx)
+
+
 def between(min, max):
     """
     Returns a function to test if a value lies between min and max
@@ -31,7 +39,7 @@ def get_input(prompt, operation, check=None):
 
 def get_vol_input(ctx, prompt):
     unit = ctx.obj["units"]["vol"]
-    prompt = "{prompt} ({units}) :".format(prompt=prompt, units=unit)
+    prompt = "{prompt} ({units}): ".format(prompt=prompt, units=unit)
     vol = get_input(prompt, lambda x: float(x))
 
     return vol
@@ -42,3 +50,4 @@ def get_gravity_input(ctx, prompt):
     og = get_input(prompt, lambda x: float(x), valid_range)
 
     return og
+
