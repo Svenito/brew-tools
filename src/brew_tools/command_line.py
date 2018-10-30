@@ -58,6 +58,9 @@ def abv(ctx, og, fg):
     """
     Calculates the ABV from the original and final gravity readings
     """
+    # These prompts are used instead of using the `prompt` attribute in the
+    # click options so that it is possible to add units to the end of the
+    # prompt based on the requested unit format.
     if not og:
         og = utils.get_gravity_input("Original Gravity: ")
     if not fg:
@@ -94,9 +97,8 @@ def kegpsi(ctx, vol, temp):
     if not vol:
         vol = utils.get_input("Desired volumes of CO2: ", lambda x: float(x))
     if not temp:
-        unit = ctx.obj["units"]["temp"]
-        temp = utils.get_input("Temperature of keg ({}): ".format(unit),
-                               lambda x: float(x))
+        temp = utils.get_unit_input(ctx.obj["units"]["temp"],
+                                    "Temperature of keg")
 
     if utils.is_metric(ctx):
         temp = bm.c_to_f(temp)
@@ -124,17 +126,16 @@ def kegpsi(ctx, vol, temp):
 def prime(ctx, beer, vol, temp):
     """
     Calculates the amount of table sugar, corn sugar, or DME needed to achieve
-    the requested CO2 volumes
+    the requested CO2 volumes for bottle priming
     """
     if not beer:
-        beer = utils.get_vol_input(ctx, "Volume of beer to prime")
+        beer = utils.get_unit_input(ctx.obj["units"]["vol"],
+                                    "Volume of beer to prime")
     if not vol:
         vol = utils.get_input("Desired volumes of CO2: ", lambda x: float(x))
-
     if not temp:
-        unit = ctx.obj["units"]["temp"]
-        temp = utils.get_input("Temperature of beer ({}): ".format(unit),
-                               lambda x: float(x))
+        temp = temp = utils.get_unit_input(ctx.obj["units"]["temp"],
+                                           "Temperature of beer")
 
     if utils.is_metric(ctx):
         temp = bm.c_to_f(temp)
@@ -186,29 +187,22 @@ def infuse(ctx, temp, target, ratio, grain, water):
     """
     temp_unit = ctx.obj["units"]["temp"]
     if not temp:
-        temp = utils.get_input(("Current temperature of mash ({}): "
-                                .format(temp_unit)),
-                               lambda x: float(x))
+        temp = temp = utils.get_unit_input(temp_unit,
+                                           "Current temperature of mash")
     if not target:
-        target = utils.get_input(("Target temperature of mash ({}): "
-                                  .format(temp_unit)),
-                                 lambda x: float(x))
+        target = utils.get_unit_input(temp_unit,
+                                      "Target temperature of mash")
     if not ratio:
         unit = "Quarts/lbs"
         if utils.is_metric(ctx):
             unit = "Liters/kg"
-
-        ratio = utils.get_input("Grist/water ratio: ({}) ".format(unit),
-                                lambda x: float(x))
+        ratio = utils.get_unit_input(unit, "Grist/water ratio")
     if not grain:
-        unit = ctx.obj["units"]["lrg_weight"]
-        grain = utils.get_input("Weight of grain in mash ({}): ".format(unit),
-                                lambda x: float(x))
+        grain = utils.get_unit_input(ctx.obj["units"]["lrg_weight"],
+                                     "Weight of grain in mash")
     if not water:
-        unit = ctx.obj["units"]["temp"]
-        water = utils.get_input(("Temperature of infusion water ({}): "
-                                 .format(temp_unit)),
-                                lambda x: float(x))
+        water = utils.get_unit_input(ctx.obj["units"]["temp"],
+                                     "Temperature of infusion water")
     try:
         infusion = bm.infusion(ratio, temp, target, water, grain)
     except ZeroDivisionError:
@@ -243,7 +237,8 @@ def dme(ctx, points, vol):
         points = utils.get_input("Points needed to achieve target gravity: ",
                                  lambda x: float(x))
     if not vol:
-        vol = utils.get_vol_input(ctx, "Current volume of the wort")
+        vol = utils.get_unit_input(ctx.obj["units"]["temp"],
+                                   "Current volume of the wort")
 
     if utils.is_metric(ctx):
         vol = bm.l_to_g(vol)
