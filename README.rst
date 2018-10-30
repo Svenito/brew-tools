@@ -13,9 +13,7 @@ brew-tools
 A command line utility that offers a set of calculators for home
 brewers.
 
-.. note::
-
-    All values and calculations are provided as guidelines only.
+    NOTE: All values and calculations are provided as guidelines only.
     Brew-tools should not be used for professional brewing. No warranty
     or guarantee of accuracy is provided on the information provided by
     this calculator.
@@ -116,6 +114,15 @@ required to run the tests with
 ::
 
     pytest tests
+
+In addition to the tests it's advisable to run a linter of the source as
+Travis will also check for linting errors. The linter command ignores
+some errors, so you can use this command to match the command run by
+Travis
+
+::
+
+    flake8 src --ignore=E501,W504,W503
 
 Thanks
 ======

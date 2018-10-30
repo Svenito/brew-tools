@@ -107,6 +107,11 @@ run the tests with
 
     pytest tests
 
+In addition to the tests it's advisable to run a linter of the source as Travis
+will also check for linting errors. The linter command ignores some errors, so you
+can use this command to match the command run by Travis
+
+    flake8 src --ignore=E501,W504,W503
 
 Thanks
 ======
