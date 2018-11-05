@@ -2,6 +2,12 @@
 Changelog
 =========
 
+Version 0.0.7
+=============
+
+* Add attenuation calculators
+* Rename utils module to inputs and refactor input functions into into
+
 Version 0.0.6
 =============
 

@@ -33,6 +33,8 @@ Currently brew-tools includes:
 * Priming sugar calculator
 * Quick infusion calculator
 * Adjust gravity with dme calculator
+* Apprent and Real attenuation calculator
+* Final gravity from a given attenuation percentage
 
 More to come
 
