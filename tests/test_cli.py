@@ -87,6 +87,7 @@ def test_imperial():
     assert result.exit_code == 0
     assert result.output == "Infuse with 6.18 quarts @ 212.0F\n"
 
+
 def test_dme():
     runner = CliRunner()
     result = runner.invoke(command_line.main,
@@ -94,9 +95,19 @@ def test_dme():
     assert result.exit_code == 0
     assert result.output == "Add 167.48g of DME to raise the wort gravity by 5 points\n"
 
+
 def test_dme_imperial():
     runner = CliRunner()
     result = runner.invoke(command_line.main,
                            ("-imperial dme -points 5 -vol 3.25"))
     assert result.exit_code == 0
     assert result.output == "Add 5.91oz of DME to raise the wort gravity by 5 points\n"
+
+
+def test_attenuation():
+    runner = CliRunner()
+    result = runner.invoke(command_line.main,
+                           ("attenuation -og 1.06 -fg 1.023"))
+    assert result.exit_code == 0
+    assert result.output == ("Apparent attenuation: 60.46%\n"
+                             "Real attenuation: 49.53%\n")

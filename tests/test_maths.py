@@ -64,10 +64,21 @@ def test_infusion():
     infuse_water = bm.infusion(1.5, 152, 168, 212, 10)
     assert infuse_water == pytest.approx(6.1818, 0.001)
 
+
 def test_abv():
     abv = bm.abv(1.04, 1.01)
     assert abv == pytest.approx(5.199, 0.001)
 
+
 def test_pre_boil_dme():
     dme = bm.pre_boil_dme(5, 3.25)
     assert dme == pytest.approx(5.91, 0.01)
+
+def test_apparent_attenuation():
+    aa = bm.apparent_attenuation(1.032, 1.015)
+    assert aa == pytest.approx(0.5246, 0.001)
+
+
+def test_real_attenuation():
+    aa = bm.real_attenuation(1.032, 1.015)
+    assert aa == pytest.approx(0.4298, 0.001)

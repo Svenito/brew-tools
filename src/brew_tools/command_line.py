@@ -285,7 +285,7 @@ def attenuation(ctx, og, fg):
         sys.exit(1)
 
     print("Apparent attenuation: {0:.2f}%"
-          .format(bm.apparent_attentuation(og, fg) * 100))
+          .format(bm.apparent_attenuation(og, fg) * 100))
     print("Real attenuation: {0:.2f}%"
           .format(bm.real_attenuation(og, fg) * 100))
 

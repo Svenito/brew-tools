@@ -169,7 +169,7 @@ def pre_boil_dme(points, cur_vol):
     return lbs_to_oz(points * (1 / (44 / cur_vol)))
 
 
-def apparent_attentuation(og, fg):
+def apparent_attenuation(og, fg):
     """
     Calculate the apparent attenuation from the current and
     original gravity.
