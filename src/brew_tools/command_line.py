@@ -313,7 +313,7 @@ def fg_from_att(ctx, og, att):
         og = inputs.get_gravity_input(ctx, "Original Gravity: ")
     if not att:
         att = inputs.get_input("Desired attenuation in %: ",
-                                lambda x: float(x))
+                               lambda x: float(x))
 
     # If passed in via options we need to check valid range
     valid_range = inputs.between(1.0, 1.2)
