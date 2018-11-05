@@ -74,6 +74,7 @@ def test_pre_boil_dme():
     dme = bm.pre_boil_dme(5, 3.25)
     assert dme == pytest.approx(5.91, 0.01)
 
+
 def test_apparent_attenuation():
     aa = bm.apparent_attenuation(1.032, 1.015)
     assert aa == pytest.approx(0.5246, 0.001)

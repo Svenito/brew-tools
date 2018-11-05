@@ -306,6 +306,8 @@ def fg_from_att(ctx, og, att):
     """
     Given a starting gravity and a desired attenuation level, will
     return the specific gravity for that percentage of attenuation.
+    Useful if you have to action something at a given attenuation point
+    and need to know what the gravity is when that point is reached
     """
     if not og:
         og = inputs.get_gravity_input(ctx, "Original Gravity: ")
