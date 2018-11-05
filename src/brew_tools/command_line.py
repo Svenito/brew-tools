@@ -62,9 +62,9 @@ def abv(ctx, og, fg):
     # click options so that it is possible to add units to the end of the
     # prompt based on the requested unit format.
     if not og:
-        og = inputs.get_gravity_input("Original Gravity: ")
+        og = inputs.get_gravity_input(ctx, "Original Gravity: ")
     if not fg:
-        fg = inputs.get_gravity_input("Final Gravity: ")
+        fg = inputs.get_gravity_input(ctx, "Final Gravity: ")
 
     # If passed in via options we need to check valid range
     valid_range = inputs.between(1.0, 1.2)
@@ -250,6 +250,44 @@ def dme(ctx, points, vol):
 
     print("Add {0:.2f}{1} of DME to raise the wort gravity by {2} points"
           .format(amt_dme, ctx.obj["units"]["weight"], points))
+
+
+@main.command()
+@click.option(
+    "-og",
+    type=float,
+    help="Original Gravity as value between 1.000 and 1.200"
+)
+@click.option(
+    "-fg",
+    type=float,
+    help="Final/current Gravity as value between 1.000 and 1.200"
+)
+@click.pass_context
+def attenuation(ctx, og, fg):
+    """
+    Calculates the apparent and real attenuation from the provided
+    original and final/current gravity.
+    Real attenuation is adjusted reading for alcohol in beer
+    """
+    if not og:
+        og = inputs.get_gravity_input(ctx, "Original Gravity: ")
+    if not fg:
+        fg = inputs.get_gravity_input(ctx, "Current Gravity: ")
+
+    # If passed in via options we need to check valid range
+    valid_range = inputs.between(1.0, 1.2)
+    if not valid_range(og) or not valid_range(fg):
+        sys.exit(1)
+
+    if fg > og:
+        print("Final gravity cannot be higher than original gravity")
+        sys.exit(1)
+
+    print("Apparent attenuation: {0:.2f}%"
+          .format(bm.apparent_attentuation(og, fg) * 100))
+    print("Real attenuation: {0:.2f}%"
+          .format(bm.real_attenuation(og, fg) * 100))
 
 
 def run():

@@ -167,3 +167,40 @@ def pre_boil_dme(points, cur_vol):
     :arg cur_vol: The current volume of the wort in gallons.
     """
     return lbs_to_oz(points * (1 / (44 / cur_vol)))
+
+
+def apparent_attentuation(og, fg):
+    """
+    Calculate the apparent attenuation from the current and
+    original gravity.
+    via http://realbeer.com/spencer/attenuation.html
+
+    AA = 1 - AE / OE
+
+    :arg og: The original gravity of the wort (1.0 to 1.2)
+    :arg fg: The current gravity of the beer
+    """
+    return 1.0 - to_plato(fg) / to_plato(og)
+
+
+def real_attenuation(og, fg):
+    """
+    Calculate the real attentuation from the original and current
+    gravity. Takes into account the alcohol in the beer. Calculates
+    the real extract and uses that to calculate the attenuation
+    via http://realbeer.com/spencer/attenuation.html
+
+    RE = .1808*OE + .8192*AE
+    RA = 1 - RE / OE
+
+    or
+
+    RA = 1 - (.1808*OE + .8192*AE) / OE
+
+    :arg og: The original gravity of the wort (1.0 to 1.2)
+    :arg fg: The current gravity of the beer
+    """
+    oe = to_plato(og)
+    ae = to_plato(fg)
+
+    return 1.0 - (.1808 * oe + .8192 * ae) / oe
