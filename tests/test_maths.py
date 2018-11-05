@@ -82,3 +82,8 @@ def test_apparent_attenuation():
 def test_real_attenuation():
     aa = bm.real_attenuation(1.032, 1.015)
     assert aa == pytest.approx(0.4298, 0.001)
+
+
+def test_fg_from_attenuation():
+    fg = bm.fg_from_attenuation(1.04, 49)
+    assert fg == pytest.approx(1.02, 0.001)

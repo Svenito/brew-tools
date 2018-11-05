@@ -111,3 +111,11 @@ def test_attenuation():
     assert result.exit_code == 0
     assert result.output == ("Apparent attenuation: 60.46%\n"
                              "Real attenuation: 49.53%\n")
+
+
+def test_fg_from_att():
+    runner = CliRunner()
+    result = runner.invoke(command_line.main,
+                           ("fg-from-att -og 1.04 -att 49"))
+    assert result.exit_code == 0
+    assert result.output == ("FG for 49.0% attenuation: 1.020\n")

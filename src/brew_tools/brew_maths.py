@@ -79,6 +79,13 @@ def to_plato(sg):
     return plato
 
 
+def to_sg(plato):
+    """
+    Convert from plato to SG
+    """
+    return 1 + (plato / (258.6 - ((plato / 258.2) * 227.1)))
+
+
 def adjust_gravity(og, fg):
     """
     Adjust final gravity for wort correction and alcohol
@@ -204,3 +211,12 @@ def real_attenuation(og, fg):
     ae = to_plato(fg)
 
     return 1.0 - (.1808 * oe + .8192 * ae) / oe
+
+
+def fg_from_attenuation(og, attenuation):
+    """
+    Calculates the gravity when the beer has reached a given
+    attenuation percentage from the original gravity
+    """
+    fg = (1.0 - (attenuation / 100.0)) * to_plato(og)
+    return to_sg(fg)

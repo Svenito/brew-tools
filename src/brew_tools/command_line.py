@@ -290,6 +290,38 @@ def attenuation(ctx, og, fg):
           .format(bm.real_attenuation(og, fg) * 100))
 
 
+@main.command()
+@click.option(
+    "-og",
+    type=float,
+    help="Original Gravity as value between 1.000 and 1.200"
+)
+@click.option(
+    "-att",
+    type=float,
+    help="Desired attenuation in %"
+)
+@click.pass_context
+def fg_from_att(ctx, og, att):
+    """
+    Given a starting gravity and a desired attenuation level, will
+    return the specific gravity for that percentage of attenuation.
+    """
+    if not og:
+        og = inputs.get_gravity_input(ctx, "Original Gravity: ")
+    if not att:
+        att = inputs.get_input("Desired attenuation in %: ",
+                                lambda x: float(x))
+
+    # If passed in via options we need to check valid range
+    valid_range = inputs.between(1.0, 1.2)
+    if not valid_range(og):
+        sys.exit(1)
+
+    print("FG for {0}% attenuation: {1:.3f}"
+          .format(att, bm.fg_from_attenuation(og, att)))
+
+
 def run():
     main()
 
