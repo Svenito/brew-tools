@@ -188,7 +188,7 @@ def pre_boil_dme(points, cur_vol):
     :arg cur_vol: The current volume of the wort in gallons.
     :returns: The amount of DME to add to raise the gravity
     """
-    return brew_float(lbs_to_oz(points * (1 / (44 / cur_vol))))
+    return lbs_to_oz(points * (1 / (44 / cur_vol)))
 
 
 def apparent_attenuation(og, fg):
