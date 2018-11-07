@@ -11,8 +11,6 @@ This is the documentation for
     ╚═╝╩╚═╚═╝╚╩╝   ╩ ╚═╝╚═╝╩═╝╚═╝
 
 
-.. note::
-
 Welcome to the documentation for Brew-Tools, the CLI toolset for
 homebrewers
 

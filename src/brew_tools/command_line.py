@@ -268,7 +268,8 @@ def attenuation(ctx, og, fg):
     """
     Calculates the apparent and real attenuation from the provided
     original and final/current gravity.
-    Real attenuation is adjusted reading for alcohol in beer
+    Real attenuation is the adjusted value taking into account the
+    alcohol in the beer
     """
     if not og:
         og = inputs.get_gravity_input(ctx, "Original Gravity: ")

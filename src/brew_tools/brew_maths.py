@@ -44,7 +44,8 @@ def l_to_g(l):
 
 
 def g_to_l(g):
-    """Convert US gallons to liters
+    """
+    Convert US gallons to liters
     """
     return g / 0.26417
 
@@ -73,7 +74,11 @@ def to_brix(value):
 
 
 def to_plato(sg):
-    # (-1 * 616.868) + (1111.14 * sg) – (630.272 * sg^2) + (135.997 * sg^3)
+    """
+    Convert specific gravity to plato (extract)
+
+    (-1 * 616.868) + (1111.14 * sg) – (630.272 * sg^2) + (135.997 * sg^3)
+    """
     plato = ((-1 * 616.868) + (1111.14 * sg) -
              (630.272 * sg**2) + (135.997 * sg**3))
     return plato
@@ -81,7 +86,7 @@ def to_plato(sg):
 
 def to_sg(plato):
     """
-    Convert from plato to SG
+    Convert from plato to specific gravity
     """
     return 1 + (plato / (258.6 - ((plato / 258.2) * 227.1)))
 
@@ -89,6 +94,10 @@ def to_sg(plato):
 def adjust_gravity(og, fg):
     """
     Adjust final gravity for wort correction and alcohol
+
+    :arg og: original gravity as specific gravity
+    :arg fg: final gravity as specific gravity
+    :returns: adjusted specific gravity value
     """
     adjusted_fg = (1.0000 - 0.00085683 * to_brix(og)) + 0.0034941 * to_brix(fg)
     return adjusted_fg
@@ -101,6 +110,7 @@ def abv(og, fg):
 
     :arg og: The original gravity
     :arg fg: The final gravity
+    :returns: The ABV value
     """
     return (og - adjust_gravity(og, fg)) * 131.25
 
@@ -110,12 +120,13 @@ def keg_psi(temp, co2):
     Calculate require keg pressure to carbonate liquid at ``temp`` with
     ``co2`` volumes of CO2
 
-    :arg temp: Temperature of liquid in keg in fahrenheit
-    :arg co2: Volume of CO2 required
-
     From http://www.wetnewf.org/pdfs/Brewing_articles/CO2%20Volumes.pdf
 
     V = (P + 14.695) * ( 0.01821 + 0.09011*EXP(-(T-32)/43.11) ) - 0.003342
+
+    :arg temp: Temperature of liquid in keg in fahrenheit
+    :arg co2: Volume of CO2 required
+    :returns: The PSI value to set the regulator to
     """
     henry_coeff = 0.01821 + 0.09011 * math.exp(-(temp - 32) / 43.11)
     pressure = ((co2 + 0.003342) / henry_coeff) - 14.695
@@ -129,14 +140,15 @@ def priming(temp, beer_vol, co2):
     Beer temperature should be the temperature that the beer has
     been at the longest.
 
-    :arg temp: Temperature of beer in fahrenheit
-    :arg beer_vol: Volume of beer to prime in gallons US
-    :arg co2: The volume of CO2 required
-
     From: http://www.straighttothepint.com/priming-sugar-calculator/
 
     PS = 15.195 * Vbeer * (VCO2 - 3.0378 + (0.050062 * Tferm) -
          (0.00026555 * (Tferm ^ 2))
+
+    :arg temp: Temperature of beer in fahrenheit
+    :arg beer_vol: Volume of beer to prime in gallons US
+    :arg co2: The volume of CO2 required
+    :returns: The amount table sugar required
     """
     return (15.195 * beer_vol *
             (co2 - 3.0378 + (0.050062 * temp) -
@@ -148,15 +160,17 @@ def infusion(ratio, curr_temp, new_temp, water_temp, grain):
     Calculate the amount of hot water required to raise the mash
     temperature to a specific temperature.
 
+    From: http://howtobrew.com/book/section-3/the-methods-of-mashing/calculations-for-boiling-water-additions
+
+    Wa = (T2 - T1)(.2G + Wm)/(Tw - T2)
+
     :arg ratio: Grist ratio in quarts/lbs
     :arg curr_temp: Current mash temperature in fahrenheit
     :arg new_temp: The target temperature of the mash in fahrenheit
     :arg water_temp: The temperature of the water to be added in fahrenheit
-    :grain: The dry weight of the grain in the mash in pounds
-
-    From: http://howtobrew.com/book/section-3/the-methods-of-mashing/calculations-for-boiling-water-additions
-
-    Wa = (T2 - T1)(.2G + Wm)/(Tw - T2)
+    :arg grain: The dry weight of the grain in the mash in pounds
+    :returns: The amount of water at given temperature to add to achieve
+        requested change in mash temperature
     """
     mash_water = grain * ratio
     return (((new_temp - curr_temp) *
@@ -166,14 +180,15 @@ def infusion(ratio, curr_temp, new_temp, water_temp, grain):
 
 def pre_boil_dme(points, cur_vol):
     """
-    Calcualate the amount of DME needed to raise the gravity of a
+    Calculate the amount of DME needed to raise the gravity of a
     given volume of wort by a given number or gravity points. Assumes
     DME has an extract of 1.044ppg.
 
     :arg points: Number of gravity points to raise
     :arg cur_vol: The current volume of the wort in gallons.
+    :returns: The amount of DME to add to raise the gravity
     """
-    return lbs_to_oz(points * (1 / (44 / cur_vol)))
+    return brew_float(lbs_to_oz(points * (1 / (44 / cur_vol))))
 
 
 def apparent_attenuation(og, fg):
@@ -186,6 +201,8 @@ def apparent_attenuation(og, fg):
 
     :arg og: The original gravity of the wort (1.0 to 1.2)
     :arg fg: The current gravity of the beer
+    :returns: The apparent attenuation as a decimal (multiply
+        by 100 to get percentage value)
     """
     return 1.0 - to_plato(fg) / to_plato(og)
 
@@ -206,6 +223,8 @@ def real_attenuation(og, fg):
 
     :arg og: The original gravity of the wort (1.0 to 1.2)
     :arg fg: The current gravity of the beer
+    :returns: The real attenuation as a decimal (multiply
+        by 100 to get percentage value)
     """
     oe = to_plato(og)
     ae = to_plato(fg)
@@ -216,7 +235,12 @@ def real_attenuation(og, fg):
 def fg_from_attenuation(og, attenuation):
     """
     Calculates the gravity when the beer has reached a given
-    attenuation percentage from the original gravity
+    attenuation percentage from the original gravity. Simply
+    an inverse solve of ``apparent_attenuation``
+
+    :arg og: The original gravity of the wort as specific gravity
+    :arg attenuation: The percentage attenuation to achieve
+    :returns: The gravity when the requested attenuation has been reached
     """
     fg = (1.0 - (attenuation / 100.0)) * to_plato(og)
     return to_sg(fg)
