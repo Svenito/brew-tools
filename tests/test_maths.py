@@ -12,9 +12,11 @@ def test_g_to_oz():
     oz = bm.g_to_oz(34)
     assert oz == pytest.approx(1.199, 0.001)
 
+
 def test_lbs_to_oz():
     oz = bm.lbs_to_oz(2)
     assert oz == pytest.approx(32, 0.01)
+
 
 def test_c_to_f():
     f = bm.c_to_f(28)
@@ -34,6 +36,7 @@ def test_l_to_g():
 def test_g_to_l():
     l = bm.g_to_l(12.41)
     assert l == pytest.approx(47, 0.1)
+
 
 def test_l_to_q():
     q = bm.l_to_q(12)
