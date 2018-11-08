@@ -99,3 +99,8 @@ def test_adjust_gravity_volume():
 
     new_vol = bm.adjust_gravity_volume(7, 1.06, 1.04)
     assert new_vol == pytest.approx(10.50, 0.01)
+
+
+def test_adjust_volume_gravity():
+    new_grav = bm.adjust_volume_gravity(5, 1.04, 3)
+    assert new_grav == pytest.approx(1.067, 0.001)

@@ -137,3 +137,11 @@ def test_adj_grav_down_vol():
     assert result.exit_code == 0
     assert result.output == ("\nNew volume of wort will be 6.25\n"
                              "Dilute wort with 1.25 liter of water\n")
+
+
+def test_adj_vol():
+    runner = CliRunner()
+    result = runner.invoke(command_line.main,
+                           ("adjust-volume -og 1.05 -newvol 4 -vol 5"))
+    assert result.exit_code == 0
+    assert result.output == ("The new gravity will be 1.062\n")
