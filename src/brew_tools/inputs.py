@@ -25,16 +25,16 @@ def get_input(prompt, operation, check=None):
 
     If value is invalid it will re-prompt user
     """
-    try:
-        value = input(prompt)
-        value = operation(value)
-        if check:
-            if not check(value):
-                raise Exception
-    except (ValueError, Exception):
-        value = get_input(prompt, operation, check)
-
-    return value
+    while 1:
+        try:
+            value = input(prompt)
+            value = operation(value)
+            if check:
+                if not check(value):
+                    raise Exception
+            return value
+        except (ValueError, Exception):
+            continue
 
 
 def get_unit_input(unit, prompt):
