@@ -35,6 +35,7 @@ Currently brew-tools includes:
 -  Adjust gravity with dme calculator
 -  Apparent and Real attenuation calculator
 -  Final gravity from a given attenuation percentage
+-  Gravity adjustment by boil off/dilution calculator
 
 More to come
 
