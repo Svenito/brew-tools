@@ -40,6 +40,8 @@ Currently brew-tools includes:
 
 More to come
 
+See the [changelog](CHANGELOG.rst) for updates in each version
+
 Installation
 ============
 
