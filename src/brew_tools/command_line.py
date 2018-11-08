@@ -325,6 +325,47 @@ def fg_from_att(ctx, og, att):
           .format(att, bm.fg_from_attenuation(og, att)))
 
 
+@main.command()
+@click.option(
+    "-og",
+    type=float,
+    help="Current Gravity as value between 1.000 and 1.200"
+)
+@click.option(
+    "-vol",
+    type=float,
+    help="Current wort volume"
+)
+@click.option(
+    "-ng",
+    type=float,
+    help="The desired gravity as a value between 1.000 and 1.200"
+)
+@click.pass_context
+def adjust_gravity(ctx, og, vol, ng):
+    if not og:
+        og = inputs.get_gravity_input(ctx, "Original Gravity: ")
+    if not ng:
+        ng = inputs.get_gravity_input(ctx, "Desired Gravity: ")
+    if not vol:
+        vol = inputs.get_unit_input(ctx.obj["units"]["vol"],
+                                    "Current volume of wort")
+
+    valid_range = inputs.between(1.0, 1.2)
+    if not valid_range(og) or not valid_range(ng):
+        sys.exit(1)
+
+    vol_adj = bm.adjust_gravity_volume(vol, og, ng)
+    print("\nNew volume of wort will be {0:.2f}".format(vol_adj))
+    diff = vol - vol_adj
+    if diff >= 0:
+        print("Boil off {0:.2f} {1} of wort".format(diff,
+                                                    ctx.obj["units"]["vol"]))
+    else:
+        print("Dilute wort with {0:.2f} {1} of water"
+              .format(diff * -1, ctx.obj["units"]["vol"]))
+
+
 def run():
     main()
 

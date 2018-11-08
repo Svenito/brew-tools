@@ -244,3 +244,21 @@ def fg_from_attenuation(og, attenuation):
     """
     fg = (1.0 - (attenuation / 100.0)) * to_plato(og)
     return to_sg(fg)
+
+
+def adjust_gravity_volume(vol, og, ng):
+    """
+    Returns the new volume needed to achieve the desired new gravity.
+    This is unit independent and the return value can be used for liters
+    and or gallons.
+
+    New Volume = (Volume * original Gravity) / new Gravity
+
+    :arg vol: Original volume of wort
+    :arg og: The current gravity of the wort
+    :arg ng: The desired gravity of the wort
+    :returns: The amount to adjust the wort volume by
+    """
+    og = (og - 1) * 1000
+    ng = (ng - 1) * 1000
+    return (vol * og) / ng

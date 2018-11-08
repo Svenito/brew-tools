@@ -119,3 +119,21 @@ def test_fg_from_att():
                            ("fg-from-att -og 1.04 -att 49"))
     assert result.exit_code == 0
     assert result.output == ("FG for 49.0% attenuation: 1.020\n")
+
+
+def test_adj_grav_up_vol():
+    runner = CliRunner()
+    result = runner.invoke(command_line.main,
+                           ("adjust-gravity -og 1.04 -ng 1.06 -vol 3"))
+    assert result.exit_code == 0
+    assert result.output == ("\nNew volume of wort will be 2.00\n"
+                             "Boil off 1.00 liter of wort\n")
+
+
+def test_adj_grav_down_vol():
+    runner = CliRunner()
+    result = runner.invoke(command_line.main,
+                           ("adjust-gravity -og 1.05 -ng 1.04 -vol 5"))
+    assert result.exit_code == 0
+    assert result.output == ("\nNew volume of wort will be 6.25\n"
+                             "Dilute wort with 1.25 liter of water\n")
