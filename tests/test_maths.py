@@ -69,8 +69,14 @@ def test_infusion():
 
 
 def test_abv():
-    abv = bm.abv(1.04, 1.01)
+    abv = bm.abv(1.04, 1.01, True)
     assert abv == pytest.approx(5.199, 0.001)
+
+
+def test_abv_noadjust():
+    abv = bm.abv(1.058, 1.008, False)
+    assert abv == pytest.approx(6.56, 0.001)
+
 
 
 def test_pre_boil_dme():

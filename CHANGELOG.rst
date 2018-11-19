@@ -2,6 +2,12 @@
 Changelog
 =========
 
+Version 0.2.0
+=============
+
+* Make wort and alcohol correction factor for abv calculation optional
+
+
 Version 0.1.0
 =============
 

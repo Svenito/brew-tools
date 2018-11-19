@@ -103,7 +103,7 @@ def adjust_gravity(og, fg):
     return adjusted_fg
 
 
-def abv(og, fg):
+def abv(og, fg, adjust):
     """
     Calculate the ABV from the given ``og`` and ``fg``. Will automatically
     adjust the fg for wort correction and alcohol
@@ -112,7 +112,9 @@ def abv(og, fg):
     :arg fg: The final gravity
     :returns: The ABV value
     """
-    return (og - adjust_gravity(og, fg)) * 131.25
+    if adjust:
+        fg = adjust_gravity(og, fg)
+    return (og - fg) * 131.25
 
 
 def keg_psi(temp, co2):

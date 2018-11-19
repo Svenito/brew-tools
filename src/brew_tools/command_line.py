@@ -60,10 +60,21 @@ def main(ctx, imperial):
     type=float,
     help="Final Gravity as value between 1.000 and 1.200"
 )
+@click.option(
+    "-adjust",
+    is_flag=True,
+    help=("Apply wort and alcohol correction factor to "
+          "final gravity if not using a refractometer. "
+          "Default is to not apply it."),
+    default=False
+)
 @click.pass_context
-def abv(ctx, og, fg):
+def abv(ctx, og, fg, adjust):
     """
-    Calculates the ABV from the original and final gravity readings
+    Calculates the ABV from the original and final gravity readings. By default
+    the wort and alcohol correction factor is not applied. If you are using a
+    hydrometer add the ``adjust`` flag to automatically correct the final
+    gravity.
     """
     # These prompts are used instead of using the `prompt` attribute in the
     # click options so that it is possible to add units to the end of the
@@ -82,7 +93,7 @@ def abv(ctx, og, fg):
         print("Final gravity cannot be higher than original gravity")
         sys.exit(1)
 
-    print("Estimated ABV: {0:.2f}%".format(bm.abv(og, fg)))
+    print("Estimated ABV: {0:.2f}%".format(bm.abv(og, fg, adjust)))
 
 
 @main.command()

@@ -11,10 +11,18 @@ from brew_tools import command_line
 
 def test_abv():
     runner = CliRunner()
-    result = runner.invoke(command_line.main, 'abv -og 1.05 -fg 1.02')
+    result = runner.invoke(command_line.main, 'abv -og 1.05 -fg 1.02 -adjust')
 
     assert result.exit_code == 0
     assert result.output == "Estimated ABV: 5.63%\n"
+
+
+def test_abv_no_adjust():
+    runner = CliRunner()
+    result = runner.invoke(command_line.main, 'abv -og 1.05 -fg 1.02 ')
+
+    assert result.exit_code == 0
+    assert result.output == "Estimated ABV: 3.94%\n"
 
 
 def test_abv_high_fg():
