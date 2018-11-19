@@ -32,6 +32,13 @@ UNITS = {"metric": {"temp": "C", "weight": "g",
 @click.pass_context
 def main(ctx, imperial):
     """
+    Brew-Tools is a small commandline utility that offers quick access to a
+    set of calculators and tools to help homebrewers create their brews.
+
+    All values and calculations are provided as guidelines only.
+    Brew-tools should not be used for professional brewing. No warranty
+    or guarantee of accuracy is provided on the information provided by
+    this calculator.
     """
     ctx.ensure_object(dict)
     unit = "metric"
