@@ -91,3 +91,16 @@ def test_real_attenuation():
 def test_fg_from_attenuation():
     fg = bm.fg_from_attenuation(1.04, 49)
     assert fg == pytest.approx(1.02, 0.001)
+
+
+def test_adjust_gravity_volume():
+    new_vol = bm.adjust_gravity_volume(4, 1.04, 1.07)
+    assert new_vol == pytest.approx(2.29, 0.01)
+
+    new_vol = bm.adjust_gravity_volume(7, 1.06, 1.04)
+    assert new_vol == pytest.approx(10.50, 0.01)
+
+
+def test_adjust_volume_gravity():
+    new_grav = bm.adjust_volume_gravity(5, 1.04, 3)
+    assert new_grav == pytest.approx(1.067, 0.001)

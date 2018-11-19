@@ -8,6 +8,16 @@ Version 0.1.0
 * Bump to 0.1.0
 * Update commandline help
 
+
+Version 0.0.8
+=============
+
+* Add adjust gravity by volume calculator
+* Add new gravity by volume change calculator
+* Refactor prompt to use loop instead of recursion
+* Fix various typos
+
+
 Version 0.0.7
 =============
 
