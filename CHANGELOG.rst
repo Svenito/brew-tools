@@ -2,6 +2,12 @@
 Changelog
 =========
 
+Version 0.1.0
+=============
+
+* Bump to 0.1.0
+* Update commandline help
+
 Version 0.0.7
 =============
 
