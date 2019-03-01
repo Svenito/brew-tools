@@ -33,7 +33,7 @@ def f_to_c(f):
     """
     Convert fahrenheit to celcius
     """
-    return 0.55 * (f - 32.0)
+    return (f - 32.0) / 1.8
 
 
 def l_to_g(l):

@@ -28,6 +28,18 @@ def test_f_to_c():
     assert c == pytest.approx(28, 0.1)
 
 
+def test_f_to_c_to_f():
+    c = bm.f_to_c(244.4)
+    f = bm.c_to_f(c)
+    assert f == 244.4
+
+
+def test_c_to_f_to_c():
+    f = bm.c_to_f(115)
+    c = bm.f_to_c(f)
+    assert c == 115
+
+
 def test_l_to_g():
     g = bm.l_to_g(47)
     assert g == pytest.approx(12.416, 0.001)
@@ -76,7 +88,6 @@ def test_abv():
 def test_abv_noadjust():
     abv = bm.abv(1.058, 1.008, False)
     assert abv == pytest.approx(6.56, 0.001)
-
 
 
 def test_pre_boil_dme():

@@ -2,6 +2,12 @@
 Changelog
 =========
 
+Version 0.2.1
+=============
+
+* Fix error converting Fahrenheit to Celcius
+
+
 Version 0.2.0
 =============
 
