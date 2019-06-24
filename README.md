@@ -116,7 +116,7 @@ which will spawn a configured shell for the environment.
 
 Tests can be run in this environment, or you can use
 
-   poetry run pytest tests
+    poetry run pytest tests
 
 to run the tests without spawning a shell.
 
