@@ -102,32 +102,41 @@ For more information see the
 
 Development
 ===========
-
 If you want to help develop brew tools you should install it into a
-virtual environment.
+virtual environment. The current version of brew-tools uses [Poetry](https://poetry.eustace.io/)
+to manage virtual environments and such.
 
-Create and source the environment and then install brew tools with
-
-::
-
-    cd <brew-tools project dir>
-    pip install -e ".[testing]"
-
-which will install an editable version, as well as all the tools
-required to run the tests with
+In order to start, [install Poetry](https://poetry.eustace.io/docs/#installation)
+and change into the brew-tools directory. From there you can run
 
 ::
 
-    pytest tests
+    poetry install
 
-In addition to the tests it's advisable to run a linter of the source as
-Travis will also check for linting errors. The linter command ignores
-some errors, so you can use this command to match the command run by
-Travis
+which will create a virtual environment and install the dependencies.
+To run `brew_tools` in the developmeent environment it's probably easiest to run
 
 ::
 
-    flake8 src --ignore=E501,W504,W503
+    poetry shell
+
+which will spawn a configured shell for the environment.
+
+Tests can be run in this environment, or you can use
+
+::
+
+   poetry run pytest tests
+
+to run the tests without spawning a shell.
+
+In addition to the tests it's advisable to run a linter of the source as Travis
+will also check for linting errors. The linter command ignores some errors, so you
+can use this command to match the command run by Travis
+
+::
+
+    poetry run flake8 src --ignore=E501,W504,W503
 
 Thanks
 ======

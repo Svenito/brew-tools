@@ -2,6 +2,11 @@
 Changelog
 =========
 
+Version 0.2.4
+=============
+
+* Update install docs to reflect poetry changes
+
 Version 0.2.3
 =============
 
