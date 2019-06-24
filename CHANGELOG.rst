@@ -2,6 +2,11 @@
 Changelog
 =========
 
+Version 0.2.6
+=============
+
+* Only a change to the CI config to make poetry work
+
 Version 0.2.5
 =============
 
