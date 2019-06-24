@@ -2,6 +2,11 @@
 Changelog
 =========
 
+Version 0.2.3
+=============
+
+* Move project to pyproject.toml and poetry build/release system
+
 Version 0.2.1
 =============
 
