@@ -2,14 +2,15 @@ language: python
 
 python:
     - "3.6"
+before_install:
+- pip install poetry
 install:
-    - pip install "setuptools>=38.3"
-    - "pip install flake8"
-    - pip install ".[testing]"
-    - pip install --upgrade pytest
-before_script: "flake8 src --ignore=E501,W504,W503"
+- poetry install
+
+before_script: "poetry run flake8 src --ignore=E501,W504,W503"
+
 script:
-    - pytest
+    - poetry run pytest tests
 
 
 branches:
