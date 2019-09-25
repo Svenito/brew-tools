@@ -60,6 +60,11 @@ def test_kg_to_lbs():
     assert lbs == pytest.approx(11.904, 0.001)
 
 
+def test_lbs_to_kg():
+    lbs = bm.lbs_to_kg(6)
+    assert lbs == pytest.approx(2.7221, 0.001)
+
+
 def test_to_brix():
     brix = bm.to_brix(1.045)
     assert brix == pytest.approx(11.195, 0.001)
@@ -121,3 +126,33 @@ def test_adjust_gravity_volume():
 def test_adjust_volume_gravity():
     new_grav = bm.adjust_volume_gravity(5, 1.04, 3)
     assert new_grav == pytest.approx(1.067, 0.001)
+
+
+def test_srm_to_ebc():
+    ebc = bm.srm_to_ebc(6)
+    assert ebc == pytest.approx(11.82, 0.01)
+
+
+def test_srm_to_l():
+    l = bm.srm_to_l(4)
+    assert l == pytest.approx(3.51, 0.01)
+
+
+def test_ebc_to_l():
+    l = bm.ebc_to_l(200)
+    assert l == pytest.approx(75.50, 0.01)
+
+
+def test_ebc_to_srm():
+    srm = bm.ebc_to_srm(168)
+    assert srm == pytest.approx(85.27, 0.01)
+
+
+def test_l_to_ebc():
+    ebc = bm.l_to_ebc(57)
+    assert ebc == pytest.approx(150.61, 0.01)
+
+
+def test_l_to_srm():
+    srm = bm.l_to_srm(87)
+    assert srm == pytest.approx(117.09, 0.01)

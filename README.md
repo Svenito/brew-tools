@@ -37,6 +37,7 @@ Currently brew-tools includes:
 * Final gravity from a given attenuation percentage
 * Gravity adjustment by boil off/dilution calculator
 * New gravity after volume adjustment
+* Simple unit converter
 
 More to come
 

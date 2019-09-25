@@ -2,6 +2,11 @@
 Changelog
 =========
 
+Version 0.2.7
+=============
+
+* Add a simple unit converter for mass, volume, gravity, and colour
+
 Version 0.2.6
 =============
 

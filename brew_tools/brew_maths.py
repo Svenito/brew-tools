@@ -66,6 +66,13 @@ def kg_to_lbs(kg):
     return kg * 2.204623
 
 
+def lbs_to_kg(lbs):
+    """
+    Convert kilograms to pounds
+    """
+    return lbs / 2.204623
+
+
 def to_brix(value):
     """
     Convert gravity value to brix value
@@ -91,6 +98,54 @@ def to_sg(plato):
     Convert from plato to specific gravity
     """
     return 1 + (plato / (258.6 - ((plato / 258.2) * 227.1)))
+
+
+def ebc_to_srm(ebc):
+    """
+    Convert the EBC value to SRM
+    https://en.wikipedia.org/wiki/Standard_Reference_Method
+    """
+    return ebc * 0.508
+
+
+def ebc_to_l(ebc):
+    """
+    Convert EBC to Lovibond
+    https://en.wikipedia.org/wiki/Standard_Reference_Method
+    """
+    return srm_to_l(ebc_to_srm(ebc))
+
+
+def srm_to_ebc(srm):
+    """
+    Convert the EBC value to SRM
+    https://en.wikipedia.org/wiki/Standard_Reference_Method
+    """
+    return srm / 0.508
+
+
+def srm_to_l(srm):
+    """
+    Convert the SRM value to Lovibond
+    https://en.wikipedia.org/wiki/Standard_Reference_Method
+    """
+    return (srm + 0.76) / 1.3546
+
+
+def l_to_srm(lovibond):
+    """
+    Convert from Lovibond to EBC
+    https://en.wikipedia.org/wiki/Standard_Reference_Method
+    """
+    return 1.3546 * lovibond - 0.76
+
+
+def l_to_ebc(lovibond):
+    """
+    Convert from Lovibond to EBC
+    https://en.wikipedia.org/wiki/Standard_Reference_Method
+    """
+    return srm_to_ebc(l_to_srm(lovibond))
 
 
 def adjust_gravity(og, fg):

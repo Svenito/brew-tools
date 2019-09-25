@@ -7,6 +7,7 @@ import logging
 from brew_tools import __version__
 from brew_tools import inputs
 import brew_tools.brew_maths as bm
+import brew_tools.converter as converter
 
 __author__ = "Sven Steinbauer"
 __copyright__ = "Sven Steinbauer"
@@ -425,6 +426,31 @@ def adjust_volume(ctx, og, vol, newvol):
 
     new_grav = bm.adjust_volume_gravity(vol, og, newvol)
     print("The new gravity will be {0:.3f}".format(new_grav))
+
+
+@main.command()
+@click.argument(
+    "what",
+    type=click.Choice(["mass", "vol", "grav", "col"]),
+
+)
+@click.argument('value')
+@click.pass_context
+def convert(ctx, what, value):
+    """
+    Convert a value between given measurements. Supported types are:
+
+    mass, vol, grav, col
+    """
+    value = float(value)
+    if what == "mass":
+        converter.print_mass(value)
+    if what == "vol":
+        converter.print_volume(value)
+    if what == "grav":
+        converter.print_gravity(value)
+    if what == "col":
+        converter.print_colour(value)
 
 
 def run():
