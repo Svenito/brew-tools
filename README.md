@@ -61,19 +61,31 @@ Usage
 Brew tools has built in help
 
 ```
-Usage: brew-tools [OPTIONS] COMMAND [ARGS]...
+Usage: brew_tools [OPTIONS] COMMAND [ARGS]...
+
+  Brew-Tools is a small commandline utility that offers quick access to a
+  set of calculators and tools to help homebrewers create their brews.
+
+  All values and calculations are provided as guidelines only. Brew-tools
+  should not be used for professional brewing. No warranty or guarantee of
+  accuracy is provided on the information provided by this calculator.
 
 Options:
---version  Show the version and exit.
--imperial  Use imperial units. Metric by default.
---help     Show this message and exit.
+  --version  Show the version and exit.
+  -imperial  Use imperial units. Metric by default.
+  --help     Show this message and exit.
 
 Commands:
-abv
-infuse
-kegpsi
-prime
-dme
+  abv             Calculates the ABV from the original and final gravity...
+  adjust-gravity  Calculate the amount of liquid to boil off/dilute with to...
+  adjust-volume   Calculate the new gravity after a change in wort volume...
+  attenuation     Calculates the apparent and real attenuation from the...
+  convert         Convert a value between given measurements.
+  dme             Given the current volume of the mash, work out how much...
+  fg-from-att     Given a starting gravity and a desired attenuation level,...
+  infuse          Given the current mash temperature, work out how much...
+  kegpsi          Calculates the regulator pressure required to achieve...
+  prime 
 ```
 
 and also for its commands

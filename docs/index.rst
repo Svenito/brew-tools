@@ -68,6 +68,8 @@ Contents
 .. toctree::
    :maxdepth: 2
 
+   Features <features>
+   Install <install>
    License <license>
    Authors <authors>
    Changelog <changelog>
