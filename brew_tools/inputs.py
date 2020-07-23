@@ -1,20 +1,14 @@
-def is_metric(ctx):
-    return ctx.obj['unit'] == 'metric'
-
-
-def is_imperial(ctx):
-    return not is_metric(ctx)
-
-
 def between(min, max):
     """
     Returns a function to test if a value lies between min and max
     """
+
     def op(x):
         if min < x and x < max:
             return True
         print("ERROR: Value must be between {} and {}".format(min, max))
         return False
+
     return op
 
 
@@ -52,7 +46,7 @@ def get_unit_input(unit, prompt):
     return value
 
 
-def get_gravity_input(ctx, prompt):
+def get_gravity_input(prompt):
     """
     Prompt for an input for gravity and validated to be
     between 1.0 and 1.2

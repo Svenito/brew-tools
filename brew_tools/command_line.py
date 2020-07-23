@@ -1,4 +1,3 @@
-
 import click
 
 import sys
@@ -16,10 +15,30 @@ __license__ = "mit"
 _logger = logging.getLogger(__name__)
 
 
-UNITS = {"metric": {"temp": "C", "weight": "g",
-                    "lrg_weight": "kg", "vol": "liter"},
-         "imperial": {"temp": "F", "weight": "oz",
-                      "lrg_weight": "lbs", "vol": "US Gal"}}
+UNITS = {
+    "metric": {"temp": "C", "weight": "g", "lrg_weight": "kg", "vol": "liter"},
+    "imperial": {"temp": "F", "weight": "oz", "lrg_weight": "lbs", "vol": "US Gal"},
+}
+
+
+def is_metric(ctx):
+    """
+    Returns if the current context is in metric.
+
+    :arg ctx: Current Click context
+    :return: true if it is in metric, false otherwise
+    """
+    return ctx.obj["unit"] == "metric"
+
+
+def is_imperial(ctx):
+    """
+    Returns if the current context is in imperial.
+
+    :arg ctx: Current Click context
+    :return: true if it is in imperial, false otherwise
+    """
+    return not is_metric(ctx)
 
 
 @click.group()
@@ -28,7 +47,7 @@ UNITS = {"metric": {"temp": "C", "weight": "g",
     "-imperial",
     help="Use imperial units. Metric by default.",
     is_flag=True,
-    default=False
+    default=False,
 )
 @click.pass_context
 def main(ctx, imperial):
@@ -46,28 +65,24 @@ def main(ctx, imperial):
     if imperial:
         unit = "imperial"
 
-    ctx.obj['units'] = UNITS[unit]
-    ctx.obj['unit'] = unit
+    ctx.obj["units"] = UNITS[unit]
+    ctx.obj["unit"] = unit
 
 
 @main.command()
 @click.option(
-    "-og",
-    type=float,
-    help="Original Gravity as value between 1.000 and 1.200"
+    "-og", type=float, help="Original Gravity as value between 1.000 and 1.200"
 )
-@click.option(
-    "-fg",
-    type=float,
-    help="Final Gravity as value between 1.000 and 1.200"
-)
+@click.option("-fg", type=float, help="Final Gravity as value between 1.000 and 1.200")
 @click.option(
     "-adjust",
     is_flag=True,
-    help=("Apply wort and alcohol correction factor to "
-          "final gravity if not using a refractometer. "
-          "Default is to not apply it."),
-    default=False
+    help=(
+        "Apply wort and alcohol correction factor to "
+        "final gravity if not using a refractometer. "
+        "Default is to not apply it."
+    ),
+    default=False,
 )
 @click.pass_context
 def abv(ctx, og, fg, adjust):
@@ -81,9 +96,9 @@ def abv(ctx, og, fg, adjust):
     # click options so that it is possible to add units to the end of the
     # prompt based on the requested unit format.
     if not og:
-        og = inputs.get_gravity_input(ctx, "Original Gravity: ")
+        og = inputs.get_gravity_input("Original Gravity: ")
     if not fg:
-        fg = inputs.get_gravity_input(ctx, "Final Gravity: ")
+        fg = inputs.get_gravity_input("Final Gravity: ")
 
     # If passed in via options we need to check valid range
     valid_range = inputs.between(1.0, 1.2)
@@ -98,16 +113,8 @@ def abv(ctx, og, fg, adjust):
 
 
 @main.command()
-@click.option(
-    "-vol",
-    type=float,
-    help="Desired volumes of CO2"
-)
-@click.option(
-    "-temp",
-    type=float,
-    help="Temperature of keg"
-)
+@click.option("-vol", type=float, help="Desired volumes of CO2")
+@click.option("-temp", type=float, help="Temperature of keg")
 @click.pass_context
 def kegpsi(ctx, vol, temp):
     """
@@ -116,31 +123,18 @@ def kegpsi(ctx, vol, temp):
     if not vol:
         vol = inputs.get_input("Desired volumes of CO2: ", lambda x: float(x))
     if not temp:
-        temp = inputs.get_unit_input(ctx.obj["units"]["temp"],
-                                     "Temperature of keg")
+        temp = inputs.get_unit_input(ctx.obj["units"]["temp"], "Temperature of keg")
 
-    if inputs.is_metric(ctx):
+    if is_metric(ctx):
         temp = bm.c_to_f(temp)
 
     print("Keg pressure required: {0:.2f}psi".format(bm.keg_psi(temp, vol)))
 
 
 @main.command()
-@click.option(
-    "-beer",
-    type=float,
-    help="Volume of beer to prime"
-)
-@click.option(
-    "-vol",
-    type=float,
-    help="Volume of CO2 required"
-)
-@click.option(
-    "-temp",
-    type=float,
-    help="Temperature of beer"
-)
+@click.option("-beer", type=float, help="Volume of beer to prime")
+@click.option("-vol", type=float, help="Volume of CO2 required")
+@click.option("-temp", type=float, help="Temperature of beer")
 @click.pass_context
 def prime(ctx, beer, vol, temp):
     """
@@ -148,20 +142,20 @@ def prime(ctx, beer, vol, temp):
     the requested CO2 volumes for bottle priming
     """
     if not beer:
-        beer = inputs.get_unit_input(ctx.obj["units"]["vol"],
-                                     "Volume of beer to prime")
+        beer = inputs.get_unit_input(ctx.obj["units"]["vol"], "Volume of beer to prime")
     if not vol:
         vol = inputs.get_input("Desired volumes of CO2: ", lambda x: float(x))
     if not temp:
-        temp = temp = inputs.get_unit_input(ctx.obj["units"]["temp"],
-                                            "Temperature of beer")
+        temp = temp = inputs.get_unit_input(
+            ctx.obj["units"]["temp"], "Temperature of beer"
+        )
 
-    if inputs.is_metric(ctx):
+    if is_metric(ctx):
         temp = bm.c_to_f(temp)
         beer = bm.l_to_g(beer)
 
     sugar = bm.priming(temp, beer, vol)
-    if inputs.is_imperial(ctx):
+    if is_imperial(ctx):
         sugar = bm.g_to_oz(sugar)
 
     unit = ctx.obj["units"]["weight"]
@@ -173,31 +167,11 @@ def prime(ctx, beer, vol, temp):
 
 
 @main.command()
-@click.option(
-    "-temp",
-    type=float,
-    help="Current temperature of mash"
-)
-@click.option(
-    "-target",
-    type=float,
-    help="Target temperature of mash"
-)
-@click.option(
-    "-ratio",
-    type=float,
-    help="Grist/water ratio"
-)
-@click.option(
-    "-grain",
-    type=float,
-    help="Weight of grain in mash"
-)
-@click.option(
-    "-water",
-    type=float,
-    help="Temp of infusion water "
-)
+@click.option("-temp", type=float, help="Current temperature of mash")
+@click.option("-target", type=float, help="Target temperature of mash")
+@click.option("-ratio", type=float, help="Grist/water ratio")
+@click.option("-grain", type=float, help="Weight of grain in mash")
+@click.option("-water", type=float, help="Temp of infusion water ")
 @click.pass_context
 def infuse(ctx, temp, target, ratio, grain, water):
     """
@@ -206,46 +180,43 @@ def infuse(ctx, temp, target, ratio, grain, water):
     """
     temp_unit = ctx.obj["units"]["temp"]
     if not temp:
-        temp = temp = inputs.get_unit_input(temp_unit,
-                                            "Current temperature of mash")
+        temp = temp = inputs.get_unit_input(temp_unit, "Current temperature of mash")
     if not target:
-        target = inputs.get_unit_input(temp_unit,
-                                       "Target temperature of mash")
+        target = inputs.get_unit_input(temp_unit, "Target temperature of mash")
     if not ratio:
         unit = "Quarts/lbs"
-        if inputs.is_metric(ctx):
+        if is_metric(ctx):
             unit = "Liters/kg"
         ratio = inputs.get_unit_input(unit, "Grist/water ratio")
     if not grain:
-        grain = inputs.get_unit_input(ctx.obj["units"]["lrg_weight"],
-                                      "Weight of grain in mash")
+        grain = inputs.get_unit_input(
+            ctx.obj["units"]["lrg_weight"], "Weight of grain in mash"
+        )
     if not water:
-        water = inputs.get_unit_input(ctx.obj["units"]["temp"],
-                                      "Temperature of infusion water")
+        water = inputs.get_unit_input(
+            ctx.obj["units"]["temp"], "Temperature of infusion water"
+        )
     try:
         infusion = bm.infusion(ratio, temp, target, water, grain)
     except ZeroDivisionError:
         infusion = 0
 
     unit = "quarts"
-    if inputs.is_metric(ctx):
+    if is_metric(ctx):
         unit = "liters"
-    print("Infuse with {0:.2f} {1} @ {2}{3}"
-          .format(infusion, unit, water, temp_unit))
+    print("Infuse with {0:.2f} {1} @ {2}{3}".format(infusion, unit, water, temp_unit))
 
 
 @main.command()
 @click.option(
     "-points",
     type=int,
-    help=("Points needed to acheive target gravity "
-          "(e.x. current gravity 1.045, target 1.050, points=5)")
+    help=(
+        "Points needed to acheive target gravity "
+        "(e.x. current gravity 1.045, target 1.050, points=5)"
+    ),
 )
-@click.option(
-    "-vol",
-    type=float,
-    help="Current volume of the wort"
-)
+@click.option("-vol", type=float, help="Current volume of the wort")
 @click.pass_context
 def dme(ctx, points, vol):
     """
@@ -253,34 +224,35 @@ def dme(ctx, points, vol):
     Extract(DME) to add to reach your target gravity
     """
     if not points:
-        points = inputs.get_input("Points needed to achieve target gravity: ",
-                                  lambda x: float(x))
+        points = inputs.get_input(
+            "Points needed to achieve target gravity: ", lambda x: float(x)
+        )
     if not vol:
-        vol = inputs.get_unit_input(ctx.obj["units"]["temp"],
-                                    "Current volume of the wort")
+        vol = inputs.get_unit_input(
+            ctx.obj["units"]["temp"], "Current volume of the wort"
+        )
 
-    if inputs.is_metric(ctx):
+    if is_metric(ctx):
         vol = bm.l_to_g(vol)
 
     amt_dme = bm.pre_boil_dme(points, vol)
 
-    if inputs.is_metric(ctx):
+    if is_metric(ctx):
         amt_dme = bm.oz_to_g(amt_dme)
 
-    print("Add {0:.2f}{1} of DME to raise the wort gravity by {2} points"
-          .format(amt_dme, ctx.obj["units"]["weight"], points))
+    print(
+        "Add {0:.2f}{1} of DME to raise the wort gravity by {2} points".format(
+            amt_dme, ctx.obj["units"]["weight"], points
+        )
+    )
 
 
 @main.command()
 @click.option(
-    "-og",
-    type=float,
-    help="Original Gravity as value between 1.000 and 1.200"
+    "-og", type=float, help="Original Gravity as value between 1.000 and 1.200"
 )
 @click.option(
-    "-fg",
-    type=float,
-    help="Final/current Gravity as value between 1.000 and 1.200"
+    "-fg", type=float, help="Final/current Gravity as value between 1.000 and 1.200"
 )
 @click.pass_context
 def attenuation(ctx, og, fg):
@@ -291,9 +263,9 @@ def attenuation(ctx, og, fg):
     alcohol in the beer
     """
     if not og:
-        og = inputs.get_gravity_input(ctx, "Original Gravity: ")
+        og = inputs.get_gravity_input("Original Gravity: ")
     if not fg:
-        fg = inputs.get_gravity_input(ctx, "Current Gravity: ")
+        fg = inputs.get_gravity_input("Current Gravity: ")
 
     # If passed in via options we need to check valid range
     valid_range = inputs.between(1.0, 1.2)
@@ -304,23 +276,17 @@ def attenuation(ctx, og, fg):
         print("Final gravity cannot be higher than original gravity")
         sys.exit(1)
 
-    print("Apparent attenuation: {0:.2f}%"
-          .format(bm.apparent_attenuation(og, fg) * 100))
-    print("Real attenuation: {0:.2f}%"
-          .format(bm.real_attenuation(og, fg) * 100))
+    print(
+        "Apparent attenuation: {0:.2f}%".format(bm.apparent_attenuation(og, fg) * 100)
+    )
+    print("Real attenuation: {0:.2f}%".format(bm.real_attenuation(og, fg) * 100))
 
 
 @main.command()
 @click.option(
-    "-og",
-    type=float,
-    help="Original Gravity as value between 1.000 and 1.200"
+    "-og", type=float, help="Original Gravity as value between 1.000 and 1.200"
 )
-@click.option(
-    "-att",
-    type=float,
-    help="Desired attenuation in %"
-)
+@click.option("-att", type=float, help="Desired attenuation in %")
 @click.pass_context
 def fg_from_att(ctx, og, att):
     """
@@ -330,35 +296,27 @@ def fg_from_att(ctx, og, att):
     and need to know what the gravity is when that point is reached
     """
     if not og:
-        og = inputs.get_gravity_input(ctx, "Original Gravity: ")
+        og = inputs.get_gravity_input("Original Gravity: ")
     if not att:
-        att = inputs.get_input("Desired attenuation in %: ",
-                               lambda x: float(x))
+        att = inputs.get_input("Desired attenuation in %: ", lambda x: float(x))
 
     # If passed in via options we need to check valid range
     valid_range = inputs.between(1.0, 1.2)
     if not valid_range(og):
         sys.exit(1)
 
-    print("FG for {0}% attenuation: {1:.3f}"
-          .format(att, bm.fg_from_attenuation(og, att)))
+    print(
+        "FG for {0}% attenuation: {1:.3f}".format(att, bm.fg_from_attenuation(og, att))
+    )
 
 
 @main.command()
 @click.option(
-    "-og",
-    type=float,
-    help="Current Gravity as value between 1.000 and 1.200"
+    "-og", type=float, help="Current Gravity as value between 1.000 and 1.200"
 )
+@click.option("-vol", type=float, help="Current wort volume")
 @click.option(
-    "-vol",
-    type=float,
-    help="Current wort volume"
-)
-@click.option(
-    "-ng",
-    type=float,
-    help="The desired gravity as a value between 1.000 and 1.200"
+    "-ng", type=float, help="The desired gravity as a value between 1.000 and 1.200"
 )
 @click.pass_context
 def adjust_gravity(ctx, og, vol, ng):
@@ -367,12 +325,11 @@ def adjust_gravity(ctx, og, vol, ng):
     to achieve a desired gravity.
     """
     if not og:
-        og = inputs.get_gravity_input(ctx, "Original Gravity: ")
+        og = inputs.get_gravity_input("Original Gravity: ")
     if not ng:
-        ng = inputs.get_gravity_input(ctx, "Desired Gravity: ")
+        ng = inputs.get_gravity_input("Desired Gravity: ")
     if not vol:
-        vol = inputs.get_unit_input(ctx.obj["units"]["vol"],
-                                    "Current volume of wort")
+        vol = inputs.get_unit_input(ctx.obj["units"]["vol"], "Current volume of wort")
 
     valid_range = inputs.between(1.0, 1.2)
     if not valid_range(og) or not valid_range(ng):
@@ -382,29 +339,21 @@ def adjust_gravity(ctx, og, vol, ng):
     print("\nNew volume of wort will be {0:.2f}".format(vol_adj))
     diff = vol - vol_adj
     if diff >= 0:
-        print("Boil off {0:.2f} {1} of wort".format(diff,
-                                                    ctx.obj["units"]["vol"]))
+        print("Boil off {0:.2f} {1} of wort".format(diff, ctx.obj["units"]["vol"]))
     else:
-        print("Dilute wort with {0:.2f} {1} of water"
-              .format(diff * -1, ctx.obj["units"]["vol"]))
+        print(
+            "Dilute wort with {0:.2f} {1} of water".format(
+                diff * -1, ctx.obj["units"]["vol"]
+            )
+        )
 
 
 @main.command()
 @click.option(
-    "-og",
-    type=float,
-    help="Current Gravity as value between 1.000 and 1.200"
+    "-og", type=float, help="Current Gravity as value between 1.000 and 1.200"
 )
-@click.option(
-    "-vol",
-    type=float,
-    help="Current wort volume"
-)
-@click.option(
-    "-newvol",
-    type=float,
-    help="The new wort volume"
-)
+@click.option("-vol", type=float, help="Current wort volume")
+@click.option("-newvol", type=float, help="The new wort volume")
 @click.pass_context
 def adjust_volume(ctx, og, vol, newvol):
     """
@@ -412,13 +361,11 @@ def adjust_volume(ctx, og, vol, newvol):
     dilution or boil off
     """
     if not og:
-        og = inputs.get_gravity_input(ctx, "Original Gravity: ")
+        og = inputs.get_gravity_input("Original Gravity: ")
     if not vol:
-        vol = inputs.get_unit_input(ctx.obj["units"]["vol"],
-                                    "Current volume of wort")
+        vol = inputs.get_unit_input(ctx.obj["units"]["vol"], "Current volume of wort")
     if not newvol:
-        newvol = inputs.get_unit_input(ctx.obj["units"]["vol"],
-                                       "New volume of wort")
+        newvol = inputs.get_unit_input(ctx.obj["units"]["vol"], "New volume of wort")
 
     valid_range = inputs.between(1.0, 1.2)
     if not valid_range(og):
@@ -430,11 +377,9 @@ def adjust_volume(ctx, og, vol, newvol):
 
 @main.command()
 @click.argument(
-    "what",
-    type=click.Choice(["mass", "vol", "grav", "col"]),
-
+    "what", type=click.Choice(["mass", "vol", "grav", "col"]),
 )
-@click.argument('value')
+@click.argument("value")
 @click.pass_context
 def convert(ctx, what, value):
     """
