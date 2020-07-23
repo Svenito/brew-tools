@@ -77,8 +77,7 @@ def to_brix(value):
     """
     Convert gravity value to brix value
     """
-    brix = (((182.4601 * value - 775.6821) *
-            value + 1262.7794) * value - 669.5622)
+    brix = ((182.4601 * value - 775.6821) * value + 1262.7794) * value - 669.5622
     return brix
 
 
@@ -88,8 +87,7 @@ def to_plato(sg):
 
     (-1 * 616.868) + (1111.14 * sg) – (630.272 * sg^2) + (135.997 * sg^3)
     """
-    plato = ((-1 * 616.868) + (1111.14 * sg) -
-             (630.272 * sg**2) + (135.997 * sg**3))
+    plato = (-1 * 616.868) + (1111.14 * sg) - (630.272 * sg ** 2) + (135.997 * sg ** 3)
     return plato
 
 
@@ -209,9 +207,11 @@ def priming(temp, beer_vol, co2):
     :arg co2: The volume of CO2 required
     :returns: The amount table sugar required
     """
-    return (15.195 * beer_vol *
-            (co2 - 3.0378 + (0.050062 * temp) -
-             (0.00026555 * (temp ** 2))))
+    return (
+        15.195
+        * beer_vol
+        * (co2 - 3.0378 + (0.050062 * temp) - (0.00026555 * (temp ** 2)))
+    )
 
 
 def infusion(ratio, curr_temp, new_temp, water_temp, grain):
@@ -232,9 +232,9 @@ def infusion(ratio, curr_temp, new_temp, water_temp, grain):
         requested change in mash temperature
     """
     mash_water = grain * ratio
-    return (((new_temp - curr_temp) *
-            (0.2 * grain + mash_water)) / (water_temp - new_temp)
-            )
+    return ((new_temp - curr_temp) * (0.2 * grain + mash_water)) / (
+        water_temp - new_temp
+    )
 
 
 def pre_boil_dme(points, cur_vol):
@@ -288,7 +288,7 @@ def real_attenuation(og, fg):
     oe = to_plato(og)
     ae = to_plato(fg)
 
-    return 1.0 - (.1808 * oe + .8192 * ae) / oe
+    return 1.0 - (0.1808 * oe + 0.8192 * ae) / oe
 
 
 def fg_from_attenuation(og, attenuation):

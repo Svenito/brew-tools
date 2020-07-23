@@ -19,4 +19,4 @@ If you are planning to work on it, you can use `poetry <https://python-poetry.or
     $> poetry shell
     $> poetry install
 
-Alternatively you can use the tried and tested virtualenv and local install method too.
+Alternatively you can use the virtualenv and local install method too.
