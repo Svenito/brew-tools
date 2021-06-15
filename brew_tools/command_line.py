@@ -377,7 +377,8 @@ def adjust_volume(ctx, og, vol, newvol):
 
 @main.command()
 @click.argument(
-    "what", type=click.Choice(["mass", "vol", "grav", "col"]),
+    "what",
+    type=click.Choice(["mass", "vol", "grav", "col"]),
 )
 @click.argument("value")
 @click.pass_context

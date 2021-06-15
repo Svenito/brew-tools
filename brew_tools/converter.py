@@ -19,16 +19,18 @@ def print_gravity(value):
 
 
 def print_colour(value):
-    print("{0} L => {1:.3f} EBC => {2:.3f} SRM".format(
-                                                       value,
-                                                       bm.l_to_ebc(value),
-                                                       bm.l_to_srm(value)))
-    print("{0} EBC => {1:.3f} L => {2:.3f} SRM".format(
-                                                       value,
-                                                       bm.ebc_to_l(value),
-                                                       bm.ebc_to_srm(value)))
-    print("{0} SRM => {1:.3f} EBC => {2:.3f} L".format(
-                                                       value,
-                                                       bm.srm_to_ebc(value),
-                                                       bm.srm_to_l(value)))
-
+    print(
+        "{0} L => {1:.3f} EBC => {2:.3f} SRM".format(
+            value, bm.l_to_ebc(value), bm.l_to_srm(value)
+        )
+    )
+    print(
+        "{0} EBC => {1:.3f} L => {2:.3f} SRM".format(
+            value, bm.ebc_to_l(value), bm.ebc_to_srm(value)
+        )
+    )
+    print(
+        "{0} SRM => {1:.3f} EBC => {2:.3f} L".format(
+            value, bm.srm_to_ebc(value), bm.srm_to_l(value)
+        )
+    )

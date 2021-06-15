@@ -38,25 +38,25 @@ def f_to_c(f):
     return (f - 32.0) / 1.8
 
 
-def l_to_g(l):
+def l_to_g(liter):
     """
     Convert liters to gallons US
     """
-    return l * 0.26417
+    return liter * 0.26417
 
 
-def g_to_l(g):
+def g_to_l(gallon):
     """
     Convert US gallons to liters
     """
-    return g / 0.26417
+    return gallon / 0.26417
 
 
-def l_to_q(l):
+def l_to_q(liter):
     """
     Convert liters to quarts US
     """
-    return l * 1.056688
+    return liter * 1.056688
 
 
 def kg_to_lbs(kg):
