@@ -1,21 +1,20 @@
 language: python
 
 python:
-    - "3.8"
+  - "3.8"
 before_install:
-- pip install poetry
+  - pip install poetry
 install:
-- poetry install
+  - poetry install
 
-before_script: 
+before_script:
   - "poetry run black --check"
-  - "poetry run flake8 brew-tools --ignore=E501,W504,W503"
+  - "poetry run flake8 brew_tools --ignore=E501,W504,W503"
 
 script:
-    - poetry run pytest tests
-
+  - poetry run pytest tests
 
 branches:
   only:
-  - master
-  - dev
+    - master
+    - dev
