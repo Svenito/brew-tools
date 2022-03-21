@@ -15,13 +15,13 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = "^3.8"
-click = "^7.0"
-black = "^21.6b0"
+click = "^8.0"
+black = "^22.1"
 
 [tool.poetry.dev-dependencies]
-pytest = "^3.0"
-pytest-cov = "^2.7"
-flake8 = "^3.7"
+pytest = "^7.1"
+pytest-cov = "^3.0"
+flake8 = "^4.0"
 
 [tool.poetry.scripts]
 brew_tools = "brew_tools.command_line:run"
