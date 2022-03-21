@@ -338,3 +338,21 @@ def adjust_volume_gravity(vol, og, new_vol):
     """
     og = (og - 1) * 1000
     return 1 + ((vol * og) / new_vol) / 1000
+
+
+def strike_temp(grain, vol, temp):
+    """
+    W = Strike water temperature °F (?)
+    R = Water to grist ratio in quarts/lb ( 40 quarts/14 lbs = 2.857)
+    T1 = Temp. of your dry grain °F (70)
+    T2 = Desired mash temp °F (156 – adjusted for thermal loss)
+
+    W = (.2/R)(T2-T1)+T2
+    """
+    r = (vol * 4) / grain
+    t1 = 70  # assume 21C/70F room temp
+    t2 = temp + 3  # adjust by 3F for thermal loss
+
+    strike = (0.2 / r) * (t2 - t1) + t2
+
+    return strike
