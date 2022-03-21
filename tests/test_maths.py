@@ -156,3 +156,7 @@ def test_l_to_ebc():
 def test_l_to_srm():
     srm = bm.l_to_srm(87)
     assert srm == pytest.approx(117.09, 0.01)
+
+def test_strike_temp():
+    strike = bm.strike_temp(14, 10, 153)
+    assert strike == pytest.approx(162.02, 0.01)

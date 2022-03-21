@@ -8,7 +8,7 @@ install:
   - poetry install
 
 before_script:
-  - "poetry run black --check"
+  - "poetry run black --check brew_tools"
   - "poetry run flake8 brew_tools --ignore=E501,W504,W503"
 
 script:

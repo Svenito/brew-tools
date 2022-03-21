@@ -153,3 +153,11 @@ def test_adj_vol():
                            ("adjust-volume -og 1.05 -newvol 4 -vol 5"))
     assert result.exit_code == 0
     assert result.output == ("The new gravity will be 1.062\n")
+
+
+def test_strike_temp():
+    runner = CliRunner()
+    result = runner.invoke(command_line.main,
+                           ('strike -grain 14 -vol 10 -temp 153'))
+    assert result.exit_code == 0
+    assert result.output == ("Strike water temp should be 232.688C\n")
