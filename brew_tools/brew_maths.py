@@ -3,28 +3,28 @@
 import math
 
 
-def oz_to_g(oz):
+def oz_to_g(oz: float) -> float:
     """
     Convert ounces to grams
     """
     return oz * 28.34952
 
 
-def g_to_oz(g):
+def g_to_oz(g: float) -> float:
     """
     Convert grams to ounces
     """
     return g / 28.34952
 
 
-def lbs_to_oz(lbs):
+def lbs_to_oz(lbs: float) -> float:
     """
     Convert lbs to ounces
     """
     return lbs * 16
 
 
-def c_to_f(c):
+def c_to_f(c: float) -> float:
     """
     Convert celcius to fahrenheit
     """
