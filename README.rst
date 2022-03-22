@@ -153,7 +153,7 @@ Brew Tools is released under the MIT license.
 
 See ``LICENSE.txt`` for more details
 
-.. |Build Status| image:: https://travis-ci.com/Svenito/brew-tools.svg?branch=master
+.. |Build Status| image:: https://travis-ci.com/Svenito/brew-tools.svg?branch=main
    :target: https://travis-ci.com/Svenito/brew-tools
 .. |Documentation Status| image:: https://readthedocs.org/projects/brew-tools/badge/?version=latest
    :target: https://brew-tools.readthedocs.io/en/latest/?badge=latest

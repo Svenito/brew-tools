@@ -31,6 +31,7 @@ Brew Tools comes with the following tools (from the help)
     infuse          Given the current mash temperature, work out how much...
     kegpsi          Calculates the regulator pressure required to achieve...
     prime           Calculates the amount of table sugar, corn sugar, or DME...
+    strike          Calculate the required strike water temperature given...
 
 The full command descriptions are below
 
@@ -86,6 +87,11 @@ prime
 #####
 
 Calculates the amount of table sugar, corn sugar, or DME needed to achieve the requested CO2 volumes for bottle priming
+
+strike
+======
+
+Calculates the require strike water temperature given the mass of grains, volume of water, and desired mash temperature.
 
 Using brew-tools in your own project
 ====================================
