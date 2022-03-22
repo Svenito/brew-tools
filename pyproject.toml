@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "brew-tools"
-version = "0.2.7"
+version = "0.2.8"
 description = "Commandline tools for the homebrewer"
 authors = ["Sven <sven@unlogic.co.uk>"]
 license = "MIT"

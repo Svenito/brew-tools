@@ -2,6 +2,11 @@
 Changelog
 =========
 
+Version 0.2.8
+=============
+
+* Add a strike water temperature calculator
+
 Version 0.2.7
 =============
 
