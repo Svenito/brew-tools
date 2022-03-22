@@ -381,6 +381,10 @@ def adjust_volume(ctx, og, vol, newvol):
 @click.option("-temp", type=float, help="Target mash temp")
 @click.pass_context
 def strike(ctx, grain, vol, temp):
+    """
+    Calculate the required strike water temperature given the mass of grains,
+    volume of water, and desired final mash temperature
+    """
     if not grain:
         grain = inputs.get_unit_input(
             ctx.obj["units"]["lrg_weight"], "Weight of grains: "
