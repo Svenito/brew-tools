@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "brew-tools"
-version = "0.2.8"
+version = "0.2.9"
 description = "Commandline tools for the homebrewer"
 authors = ["Sven <sven@unlogic.co.uk>"]
 license = "MIT"
@@ -17,11 +17,13 @@ classifiers = [
 python = "^3.8"
 click = "^8.0"
 black = "^22.1"
+appdirs = "^1.4.4"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.1"
 pytest-cov = "^3.0"
 flake8 = "^4.0"
+mypy = "^0.941"
 
 [tool.poetry.scripts]
 brew_tools = "brew_tools.command_line:run"

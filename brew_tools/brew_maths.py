@@ -3,77 +3,77 @@
 import math
 
 
-def oz_to_g(oz):
+def oz_to_g(oz: float) -> float:
     """
     Convert ounces to grams
     """
     return oz * 28.34952
 
 
-def g_to_oz(g):
+def g_to_oz(g: float) -> float:
     """
     Convert grams to ounces
     """
     return g / 28.34952
 
 
-def lbs_to_oz(lbs):
+def lbs_to_oz(lbs: float) -> float:
     """
     Convert lbs to ounces
     """
     return lbs * 16
 
 
-def c_to_f(c):
+def c_to_f(c: float) -> float:
     """
     Convert celcius to fahrenheit
     """
     return c * 1.8 + 32.0
 
 
-def f_to_c(f):
+def f_to_c(f: float) -> float:
     """
     Convert fahrenheit to celcius
     """
     return (f - 32.0) / 1.8
 
 
-def l_to_g(liter):
+def l_to_g(liter: float) -> float:
     """
     Convert liters to gallons US
     """
     return liter * 0.26417
 
 
-def g_to_l(gallon):
+def g_to_l(gallon: float) -> float:
     """
     Convert US gallons to liters
     """
     return gallon / 0.26417
 
 
-def l_to_q(liter):
+def l_to_q(liter: float) -> float:
     """
     Convert liters to quarts US
     """
     return liter * 1.056688
 
 
-def kg_to_lbs(kg):
+def kg_to_lbs(kg: float) -> float:
     """
     Convert kilograms to pounds
     """
     return kg * 2.204623
 
 
-def lbs_to_kg(lbs):
+def lbs_to_kg(lbs: float) -> float:
     """
     Convert kilograms to pounds
     """
     return lbs / 2.204623
 
 
-def to_brix(value):
+def to_brix(value: float) -> float:
     """
     Convert gravity value to brix value
     """
@@ -81,7 +81,7 @@ def to_brix(value):
     return brix
 
 
-def to_plato(sg):
+def to_plato(sg: float) -> float:
     """
     Convert specific gravity to plato (extract)
 
@@ -91,14 +91,14 @@ def to_plato(sg):
     return plato
 
 
-def to_sg(plato):
+def to_sg(plato: float) -> float:
     """
     Convert from plato to specific gravity
     """
     return 1 + (plato / (258.6 - ((plato / 258.2) * 227.1)))
 
 
-def ebc_to_srm(ebc):
+def ebc_to_srm(ebc: float) -> float:
     """
     Convert the EBC value to SRM
     https://en.wikipedia.org/wiki/Standard_Reference_Method
@@ -106,7 +106,7 @@ def ebc_to_srm(ebc):
     return ebc * 0.508
 
 
-def ebc_to_l(ebc):
+def ebc_to_l(ebc: float) -> float:
     """
     Convert EBC to Lovibond
     https://en.wikipedia.org/wiki/Standard_Reference_Method
@@ -114,7 +114,7 @@ def ebc_to_l(ebc):
     return srm_to_l(ebc_to_srm(ebc))
 
 
-def srm_to_ebc(srm):
+def srm_to_ebc(srm: float) -> float:
     """
     Convert the EBC value to SRM
     https://en.wikipedia.org/wiki/Standard_Reference_Method
@@ -122,7 +122,7 @@ def srm_to_ebc(srm):
     return srm / 0.508
 
 
-def srm_to_l(srm):
+def srm_to_l(srm: float) -> float:
     """
     Convert the SRM value to Lovibond
     https://en.wikipedia.org/wiki/Standard_Reference_Method
@@ -130,7 +130,7 @@ def srm_to_l(srm):
     return (srm + 0.76) / 1.3546
 
 
-def l_to_srm(lovibond):
+def l_to_srm(lovibond: float) -> float:
     """
     Convert from Lovibond to EBC
     https://en.wikipedia.org/wiki/Standard_Reference_Method
@@ -138,7 +138,7 @@ def l_to_srm(lovibond):
     return 1.3546 * lovibond - 0.76
 
 
-def l_to_ebc(lovibond):
+def l_to_ebc(lovibond: float) -> float:
     """
     Convert from Lovibond to EBC
     https://en.wikipedia.org/wiki/Standard_Reference_Method
@@ -146,7 +146,7 @@ def l_to_ebc(lovibond):
     return srm_to_ebc(l_to_srm(lovibond))
 
 
-def adjust_gravity(og, fg):
+def adjust_gravity(og: float, fg: float) -> float:
     """
     Adjust final gravity for wort correction and alcohol
 
@@ -158,7 +158,7 @@ def adjust_gravity(og, fg):
     return adjusted_fg
 
 
-def abv(og, fg, adjust):
+def abv(og: float, fg: float, adjust: bool) -> float:
     """
     Calculate the ABV from the given ``og`` and ``fg``. Will automatically
     adjust the fg for wort correction and alcohol
@@ -172,7 +172,7 @@ def abv(og, fg, adjust):
     return (og - fg) * 131.25
 
 
-def keg_psi(temp, co2):
+def keg_psi(temp: float, co2: float) -> float:
     """
     Calculate require keg pressure to carbonate liquid at ``temp`` with
     ``co2`` volumes of CO2
@@ -190,7 +190,7 @@ def keg_psi(temp, co2):
     return pressure
 
 
-def priming(temp, beer_vol, co2):
+def priming(temp: float, beer_vol: float, co2: float) -> float:
     """
     Calculate the required weight priming (table) sugar for a given
     volume of beer at a specific temperature for desired CO2 volume.
@@ -214,7 +214,9 @@ def priming(temp, beer_vol, co2):
     )
 
 
-def infusion(ratio, curr_temp, new_temp, water_temp, grain):
+def infusion(
+    ratio: float, curr_temp: float, new_temp: float, water_temp: float, grain: float
+) -> float:
     """
     Calculate the amount of hot water required to raise the mash
     temperature to a specific temperature.
@@ -237,7 +239,7 @@ def infusion(ratio, curr_temp, new_temp, water_temp, grain):
     )
 
 
-def pre_boil_dme(points, cur_vol):
+def pre_boil_dme(points: float, cur_vol: float) -> float:
     """
     Calculate the amount of DME needed to raise the gravity of a
     given volume of wort by a given number or gravity points. Assumes
@@ -250,7 +252,7 @@ def pre_boil_dme(points, cur_vol):
     return lbs_to_oz(points * (1 / (44 / cur_vol)))
 
 
-def apparent_attenuation(og, fg):
+def apparent_attenuation(og: float, fg: float) -> float:
     """
     Calculate the apparent attenuation from the current and
     original gravity.
@@ -266,7 +268,7 @@ def apparent_attenuation(og, fg):
     return 1.0 - to_plato(fg) / to_plato(og)
 
 
-def real_attenuation(og, fg):
+def real_attenuation(og: float, fg: float) -> float:
     """
     Calculate the real attentuation from the original and current
     gravity. Takes into account the alcohol in the beer. Calculates
@@ -291,7 +293,7 @@ def real_attenuation(og, fg):
     return 1.0 - (0.1808 * oe + 0.8192 * ae) / oe
 
 
-def fg_from_attenuation(og, attenuation):
+def fg_from_attenuation(og: float, attenuation: float) -> float:
     """
     Calculates the gravity when the beer has reached a given
     attenuation percentage from the original gravity. Simply
@@ -305,7 +307,7 @@ def fg_from_attenuation(og, attenuation):
     return to_sg(fg)
 
 
-def adjust_gravity_volume(vol, og, ng):
+def adjust_gravity_volume(vol: float, og: float, ng: float) -> float:
     """
     Returns the new volume needed to achieve the desired new gravity.
     This is unit independent and the return value can be used for liters
@@ -323,7 +325,7 @@ def adjust_gravity_volume(vol, og, ng):
     return (vol * og) / ng
 
 
-def adjust_volume_gravity(vol, og, new_vol):
+def adjust_volume_gravity(vol: float, og: float, new_vol: float) -> float:
     """
     Calculate the new gravity after boil off or dilution to ``new_vol``
     This is unit independent and the volume can be used for liters
@@ -340,7 +342,7 @@ def adjust_volume_gravity(vol, og, new_vol):
     return 1 + ((vol * og) / new_vol) / 1000
 
 
-def strike_temp(grain, vol, temp):
+def strike_temp(grain: float, vol: float, temp: float) -> float:
     """
     W = Strike water temperature °F (?)
     R = Water to grist ratio in quarts/lb ( 40 quarts/14 lbs = 2.857)

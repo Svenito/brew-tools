@@ -2,6 +2,11 @@
 Changelog
 =========
 
+Version 0.2.9
+=============
+
+* Adds user config for default unit type (metric or imperial)
+
 Version 0.2.8
 =============
 
