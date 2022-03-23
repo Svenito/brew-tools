@@ -64,7 +64,14 @@ def main(ctx, unit):
     ctx.ensure_object(dict)
 
     if not unit:
-        unit = config.current_config["general"]["unit"]
+        try:
+            unit = config.current_config["general"]["unit"]
+        except KeyError:
+            # Fallback to metric if all else fails
+            print(
+                f"Error with config file {config.config_file()}. Defaulting to metric."
+            )
+            unit = "metric"
 
     ctx.obj["units"] = UNITS[unit]
     ctx.obj["unit"] = unit
@@ -442,9 +449,20 @@ def run():
         answer = inputs.get_choice("Enter selection:", config.units)
 
         config.current_config["general"] = {"unit": config.units[answer]}
-        config.write_config()
+        try:
+            config.write_config()
+        except Exception:
+            # TODO allow user to ignore?
+            print(
+                f"Unable to write to f{config.config_file()}. Check permission and try again."
+            )
+            sys.exit(1)
     else:
-        config.read_config()
+        try:
+            config.read_config()
+        except Exception:
+            print(f"Unable to read {config.config_file()}")
+            sys.exit(1)
     main()
 
 
