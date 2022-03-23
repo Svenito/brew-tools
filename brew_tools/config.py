@@ -1,15 +1,13 @@
 import appdirs
 import os
 import configparser
-from collections import namedtuple
-from typing import Any
 
 current_config = configparser.ConfigParser()
 
 APPNAME = "brewtools"
 FILENAME = "brewtools.conf"
 
-units = ['imperial', 'metric']
+units = ["imperial", "metric"]
 
 
 def config_file() -> str:
@@ -24,7 +22,7 @@ def exists() -> bool:
 def write_config():
     if not os.path.exists(appdirs.user_config_dir(APPNAME)):
         os.makedirs(appdirs.user_config_dir(APPNAME))
-    with open(config_file(), 'w') as f:
+    with open(config_file(), "w") as f:
         current_config.write(f)
 
     return current_config

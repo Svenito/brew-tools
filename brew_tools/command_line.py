@@ -47,7 +47,7 @@ def is_imperial(ctx):
 @click.option(
     "--unit",
     help="Ignore config and use a different unit.",
-    type=click.Choice(['metric', 'imperial']),
+    type=click.Choice(["metric", "imperial"]),
     required=False,
 )
 @click.pass_context
@@ -439,13 +439,14 @@ def run():
     if not config.exists():
         print("This is the first time you are running brew tools.")
         print("Please select your preferred units.")
-        answer = inputs.get_choice('Enter selection:', config.units)
+        answer = inputs.get_choice("Enter selection:", config.units)
 
         config.current_config["general"] = {"unit": config.units[answer]}
         config.write_config()
     else:
         config.read_config()
     main()
+
 
 if __name__ == "__main__":
     run()

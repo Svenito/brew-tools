@@ -24,6 +24,8 @@ pytest = "^7.1"
 pytest-cov = "^3.0"
 flake8 = "^4.0"
 mypy = "^0.941"
+types-setuptools = "^57.4.11"
+appdirs-stubs = "^0.1.0"
 
 [tool.poetry.scripts]
 brew_tools = "brew_tools.command_line:run"
