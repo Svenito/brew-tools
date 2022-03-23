@@ -17,6 +17,7 @@ classifiers = [
 python = "^3.8"
 click = "^8.0"
 black = "^22.1"
+appdirs = "^1.4.4"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.1"

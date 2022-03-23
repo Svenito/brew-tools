@@ -5,6 +5,7 @@ import logging
 
 from brew_tools import __version__
 from brew_tools import inputs
+from brew_tools import config
 import brew_tools.brew_maths as bm
 import brew_tools.converter as converter
 
@@ -44,13 +45,13 @@ def is_imperial(ctx):
 @click.group()
 @click.version_option(version=__version__)
 @click.option(
-    "-imperial",
-    help="Use imperial units. Metric by default.",
-    is_flag=True,
-    default=False,
+    "--unit",
+    help="Ignore config and use a different unit.",
+    type=click.Choice(['metric', 'imperial']),
+    required=False,
 )
 @click.pass_context
-def main(ctx, imperial):
+def main(ctx, unit):
     """
     Brew-Tools is a small commandline utility that offers quick access to a
     set of calculators and tools to help homebrewers create their brews.
@@ -61,9 +62,9 @@ def main(ctx, imperial):
     this calculator.
     """
     ctx.ensure_object(dict)
-    unit = "metric"
-    if imperial:
-        unit = "imperial"
+
+    if not unit:
+        unit = config.current_config["general"]["unit"]
 
     ctx.obj["units"] = UNITS[unit]
     ctx.obj["unit"] = unit
@@ -435,8 +436,16 @@ def convert(ctx, what, value):
 
 
 def run():
-    main()
+    if not config.exists():
+        print("This is the first time you are running brew tools.")
+        print("Please select your preferred units.")
+        answer = inputs.get_choice('Enter selection:', config.units)
 
+        config.current_config["general"] = {"unit": config.units[answer]}
+        config.write_config()
+    else:
+        config.read_config()
+    main()
 
 if __name__ == "__main__":
     run()
