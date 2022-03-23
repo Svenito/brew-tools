@@ -17,7 +17,7 @@ Brew Tools comes with the following tools (from the help)
 
     Options:
       --version  Show the version and exit.
-      -imperial  Use imperial units. Metric by default.
+       --unit [metric|imperial]  Ignore config and use a different unit.
       --help     Show this message and exit.
 
     Commands:
@@ -31,7 +31,11 @@ Brew Tools comes with the following tools (from the help)
     infuse          Given the current mash temperature, work out how much...
     kegpsi          Calculates the regulator pressure required to achieve...
     prime           Calculates the amount of table sugar, corn sugar, or DME...
+<<<<<<< Updated upstream
     strike          Calculate the required strike water temperature given...
+=======
+    strike          Calculate the strike water temperature given the mass...
+>>>>>>> Stashed changes
 
 The full command descriptions are below
 
@@ -89,9 +93,9 @@ prime
 Calculates the amount of table sugar, corn sugar, or DME needed to achieve the requested CO2 volumes for bottle priming
 
 strike
-======
+######
 
-Calculates the require strike water temperature given the mass of grains, volume of water, and desired mash temperature.
+Calculate the strike water temperature given the mass of grain, volume    of water, and desired mash temperature
 
 Using brew-tools in your own project
 ====================================

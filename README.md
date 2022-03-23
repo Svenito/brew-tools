@@ -37,6 +37,7 @@ Currently brew-tools includes:
 * Gravity adjustment by boil off/dilution calculator
 * New gravity after volume adjustment
 * Strike water temp calculator
+* Strike water temperature
 * Simple unit converter
 
 More to come
@@ -58,6 +59,10 @@ You can also clone/download this repository and install it using pip
 Usage
 =====
 
+When first starting Brew tools you will be asked for your preferred unit type, metric or imperial.
+This is then stored in a config file and used as the default unit. This can be temporarily
+changed with the `--unit` option.
+
 Brew tools has built in help
 
 ```
@@ -72,7 +77,7 @@ Usage: brew_tools [OPTIONS] COMMAND [ARGS]...
 
 Options:
   --version  Show the version and exit.
-  -imperial  Use imperial units. Metric by default.
+  --unit [metric|imperial]  Ignore config and use a different unit.
   --help     Show this message and exit.
 
 Commands:
