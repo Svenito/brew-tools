@@ -358,3 +358,31 @@ def strike_temp(grain: float, vol: float, temp: float) -> float:
     strike = (0.2 / r) * (t2 - t1) + t2
 
     return strike
+
+
+def gravity_temperature_correct(gravity: float, temp: float, cal_temp: float) -> float:
+    """
+    Adjust single gravity for a given temperature
+
+    https://homebrewacademy.com/hydrometer-temperature-correction/
+
+    :arg gravity: measured single gravity
+    :arg temp: current temperature of wort
+    :arg cal_temp: calibration temp of hydrometer
+    :returns: Adjusted single gravity
+    """
+    adj = gravity * (
+        (
+            1.00130346
+            - 0.000134722124 * temp
+            + 0.00000204052596 * temp * temp
+            - 0.00000000232820948 * temp * temp * temp
+        )
+        / (
+            1.00130346
+            - 0.000134722124 * cal_temp
+            + 0.00000204052596 * cal_temp * cal_temp
+            - 0.00000000232820948 * cal_temp * cal_temp * cal_temp
+        )
+    )
+    return adj

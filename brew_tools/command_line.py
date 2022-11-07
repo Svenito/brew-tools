@@ -419,6 +419,37 @@ def strike(ctx, grain, vol, temp):
 
 
 @main.command()
+@click.option("-sg", type=float, help="Measured gravity in SG")
+@click.option("-temp", type=float, help="Temperature of measured wort")
+@click.option("-caltemp", type=float, help="Calibration temp of hydrometer")
+@click.pass_context
+def adjust_sg(ctx, sg, temp, caltemp):
+    """
+    Calculate the adjusted single gravity according to the current temperature of the
+    wort.
+    """
+    if not sg:
+        sg = inputs.get_gravity_input("Original gravity: ")
+    if not temp:
+        temp = inputs.get_unit_input(ctx.obj["units"]["temp"], "Temp of wort: ")
+    if not caltemp:
+        caltemp = inputs.get_unit_input(ctx.obj["units"]["temp"], "Calibration temp: ")
+
+    if is_metric(ctx):
+        f_temp = bm.c_to_f(temp)
+        f_caltemp = bm.c_to_f(caltemp)
+        adjusted_grav = bm.gravity_temperature_correct(sg, f_temp, f_caltemp)
+    else:
+        adjusted_grav = bm.gravity_temperature_correct(sg, temp, caltemp)
+
+    print(
+        "Adjusted gravity at {0:.3f}{1} is: {2:.3f}".format(
+            temp, ctx.obj["units"]["temp"], adjusted_grav
+        )
+    )
+
+
+@main.command()
 @click.argument(
     "what",
     type=click.Choice(["mass", "vol", "grav", "col"]),
