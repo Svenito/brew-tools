@@ -2,6 +2,11 @@
 Changelog
 =========
 
+Version 0.3.0
+=============
+
+* Add tool to adjust gravity according to wort temperature
+
 Version 0.2.9
 =============
 
