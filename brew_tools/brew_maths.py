@@ -342,7 +342,7 @@ def adjust_volume_gravity(vol: float, og: float, new_vol: float) -> float:
     return 1 + ((vol * og) / new_vol) / 1000
 
 
-def strike_temp(grain: float, vol: float, temp: float) -> float:
+def strike_temp(grain: float, grain_temp: float, vol: float, temp: float) -> float:
     """
     W = Strike water temperature °F (?)
     R = Water to grist ratio in quarts/lb ( 40 quarts/14 lbs = 2.857)
@@ -352,7 +352,7 @@ def strike_temp(grain: float, vol: float, temp: float) -> float:
     W = (.2/R)(T2-T1)+T2
     """
     r = (vol * 4) / grain
-    t1 = 70  # assume 21C/70F room temp
+    t1 = grain_temp
     t2 = temp + 3  # adjust by 3F for thermal loss
 
     strike = (0.2 / r) * (t2 - t1) + t2
