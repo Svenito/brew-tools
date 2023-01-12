@@ -385,10 +385,11 @@ def adjust_volume(ctx, og, vol, newvol):
 
 @main.command()
 @click.option("-grain", type=float, help="Weight of grain")
+@click.option("-grain_temp", type=float, help="Temperature of grain")
 @click.option("-vol", type=float, help="Volume of water")
 @click.option("-temp", type=float, help="Target mash temp")
 @click.pass_context
-def strike(ctx, grain, vol, temp):
+def strike(ctx, grain, grain_temp, vol, temp):
     """
     Calculate the required strike water temperature given the mass of grains,
     volume of water, and desired final mash temperature
@@ -397,6 +398,11 @@ def strike(ctx, grain, vol, temp):
         grain = inputs.get_unit_input(
             ctx.obj["units"]["lrg_weight"], "Weight of grains: "
         )
+    if not grain_temp:
+        grain_temp = inputs.get_unit_input(
+            ctx.obj["units"]["temp"],
+            "Temperature of grains: "
+        )
     if not vol:
         vol = inputs.get_unit_input(ctx.obj["units"]["vol"], "Volume of water: ")
     if not temp:
@@ -404,10 +410,11 @@ def strike(ctx, grain, vol, temp):
 
     if is_metric(ctx):
         grain = bm.kg_to_lbs(grain)
+        grain_temp = bm.c_to_f(grain_temp)
         vol = bm.l_to_g(vol)
         temp = bm.c_to_f(temp)
 
-    strike_temp = bm.strike_temp(grain, vol, temp)
+    strike_temp = bm.strike_temp(grain, grain_temp, vol, temp)
     if is_metric(ctx):
         strike_temp = bm.f_to_c(strike_temp)
 
