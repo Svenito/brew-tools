@@ -6,12 +6,12 @@ def get_choice(prompt: str, choices: List[str]) -> int:
     valid_range = between(-1, num_choices)
     while True:
         for i, choice in enumerate(choices):
-            print(f'{i}: {choice}')
+            print(f"{i}: {choice}")
 
-        answer = int(input(f'{prompt}\n'))
+        answer = int(input(f"{prompt}\n"))
         if valid_range(answer):
             return answer
-        print('Invalid selection.')
+        print("Invalid selection.")
 
 
 def between(min: float, max: float) -> Callable:
