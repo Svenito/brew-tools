@@ -18,12 +18,13 @@ python = "^3.8"
 click = "^8.0"
 black = "^22.1"
 appdirs = "^1.4.4"
+mypy = "^0.991"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.1"
 pytest-cov = "^3.0"
 flake8 = "^4.0"
-mypy = "^0.941"
+mypy = "^0.991"
 types-setuptools = "^57.4.11"
 appdirs-stubs = "^0.1.0"
 
