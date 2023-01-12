@@ -1,4 +1,4 @@
-from typing import Callable, List
+from typing import TypeVar, Callable, List
 
 
 def get_choice(prompt: str, choices: List[str]) -> int:
@@ -26,6 +26,15 @@ def between(min: float, max: float) -> Callable:
         return False
 
     return op
+
+
+T = TypeVar('T')
+
+def get_input(prompt: str, convert: Callable[[str], T]) -> T:
+    """
+    Runs a convert function on a prompt
+    """
+    return convert(input(prompt))
 
 
 def get_unit_input(unit: str, prompt: str) -> float:
