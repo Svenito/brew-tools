@@ -151,6 +151,7 @@ Thanks to
 
 * /u/DAMNIT_REZNO - for inspiring me to start this project
 * SlayterDev - DME addition calculator
+* Szczyp - Add input for grain temp and fix missing input function
 
 License
 =======
