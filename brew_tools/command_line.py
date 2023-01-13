@@ -400,8 +400,7 @@ def strike(ctx, grain, grain_temp, vol, temp):
         )
     if not grain_temp:
         grain_temp = inputs.get_unit_input(
-            ctx.obj["units"]["temp"],
-            "Temperature of grains: "
+            ctx.obj["units"]["temp"], "Temperature of grains: "
         )
     if not vol:
         vol = inputs.get_unit_input(ctx.obj["units"]["vol"], "Volume of water: ")
