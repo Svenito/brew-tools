@@ -28,6 +28,9 @@ mypy = "^0.941"
 [tool.poetry.scripts]
 brew_tools = "brew_tools.command_line:run"
 
+[tool.poetry.group.dev.dependencies]
+pytest-mock = "^3.12.0"
+
 [build-system]
 requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"

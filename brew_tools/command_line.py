@@ -110,7 +110,7 @@ def abv(ctx, og, fg, adjust):
         print("Final gravity cannot be higher than original gravity")
         sys.exit(1)
 
-    print("Estimated ABV: {0:.2f}%".format(bm.abv(og, fg, adjust)))
+    print(f"Estimated ABV: {bm.abv(og, fg, adjust):.2f}%")
 
 
 @main.command()
@@ -129,7 +129,7 @@ def kegpsi(ctx, vol, temp):
     if is_metric(ctx):
         temp = bm.c_to_f(temp)
 
-    print("Keg pressure required: {0:.2f}psi".format(bm.keg_psi(temp, vol)))
+    print(f"Keg pressure required: {bm.keg_psi(temp, vol):.2f}psi")
 
 
 @main.command()
@@ -162,9 +162,9 @@ def prime(ctx, beer, vol, temp):
     unit = ctx.obj["units"]["weight"]
     print()
     print("Use only one of the following:")
-    print("Table sugar: {0:.2f}{1}".format(sugar, unit))
-    print("Corn Sugar: {0:.2f}{1}".format(sugar * 1.099421965317919, unit))
-    print("DME: {0:.2f}{1}".format(sugar * 1.4705202312138728, unit))
+    print(f"Table sugar: {sugar:.2f}{unit}")
+    print(f"Corn Sugar: {sugar * 1.099421965317919:.2f}{unit}")
+    print(f"DME: {sugar * 1.4705202312138728:.2f}{unit}")
 
 
 @main.command()
@@ -205,7 +205,7 @@ def infuse(ctx, temp, target, ratio, grain, water):
     unit = "quarts"
     if is_metric(ctx):
         unit = "liters"
-    print("Infuse with {0:.2f} {1} @ {2}{3}".format(infusion, unit, water, temp_unit))
+    print(f"Infuse with {infusion:.2f} {unit} @ {water}{temp_unit}".format(infusion, unit, water, temp_unit))
 
 
 @main.command()
@@ -241,11 +241,7 @@ def dme(ctx, points, vol):
     if is_metric(ctx):
         amt_dme = bm.oz_to_g(amt_dme)
 
-    print(
-        "Add {0:.2f}{1} of DME to raise the wort gravity by {2} points".format(
-            amt_dme, ctx.obj["units"]["weight"], points
-        )
-    )
+    print(f"Add {amt_dme:.2f}{ctx.obj['units']['weight']} of DME to raise the wort gravity by {points} points")
 
 
 @main.command()
@@ -278,9 +274,9 @@ def attenuation(ctx, og, fg):
         sys.exit(1)
 
     print(
-        "Apparent attenuation: {0:.2f}%".format(bm.apparent_attenuation(og, fg) * 100)
+        f"Apparent attenuation: {bm.apparent_attenuation(og, fg) * 100:.2f}%"
     )
-    print("Real attenuation: {0:.2f}%".format(bm.real_attenuation(og, fg) * 100))
+    print(f"Real attenuation: {bm.real_attenuation(og, fg) * 100:.2f}%")
 
 
 @main.command()
@@ -307,7 +303,7 @@ def fg_from_att(ctx, og, att):
         sys.exit(1)
 
     print(
-        "FG for {0}% attenuation: {1:.3f}".format(att, bm.fg_from_attenuation(og, att))
+        f"FG for {att}% attenuation: {bm.fg_from_attenuation(og, att):.3f}"
     )
 
 
@@ -337,15 +333,13 @@ def adjust_gravity(ctx, og, vol, ng):
         sys.exit(1)
 
     vol_adj = bm.adjust_gravity_volume(vol, og, ng)
-    print("\nNew volume of wort will be {0:.2f}".format(vol_adj))
+    print(f"\nNew volume of wort will be {vol_adj:.2f}")
     diff = vol - vol_adj
     if diff >= 0:
-        print("Boil off {0:.2f} {1} of wort".format(diff, ctx.obj["units"]["vol"]))
+        print(f"Boil off {diff:.2f} {ctx.obj['units']['vol']} of wort")
     else:
         print(
-            "Dilute wort with {0:.2f} {1} of water".format(
-                diff * -1, ctx.obj["units"]["vol"]
-            )
+            f"Dilute wort with {diff * -1:.2f} {ctx.obj['units']['vol']} of water"
         )
 
 
@@ -373,7 +367,7 @@ def adjust_volume(ctx, og, vol, newvol):
         sys.exit(1)
 
     new_grav = bm.adjust_volume_gravity(vol, og, newvol)
-    print("The new gravity will be {0:.3f}".format(new_grav))
+    print(f"The new gravity will be {new_grav:.3f}")
 
 
 @main.command()
@@ -405,9 +399,7 @@ def strike(ctx, grain, vol, temp):
         strike_temp = bm.f_to_c(strike_temp)
 
     print(
-        "Strike water temp should be {0:.3f}{1}".format(
-            strike_temp, ctx.obj["units"]["temp"]
-        )
+        f"Strike water temp should be {strike_temp:.3f}{ctx.obj['units']['temp']}"
     )
 
 
