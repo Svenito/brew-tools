@@ -1,8 +1,9 @@
-import appdirs
-import os
 import configparser
+import os
 from collections import namedtuple
 from typing import Any
+
+import appdirs
 
 current_config = configparser.ConfigParser()
 

@@ -1,13 +1,11 @@
+import logging
+import sys
+
 import click
 
-import sys
-import logging
-
-from brew_tools import __version__
-from brew_tools import inputs
-from brew_tools import config
 import brew_tools.brew_maths as bm
 import brew_tools.converter as converter
+from brew_tools import __version__, config, inputs
 
 __author__ = "Sven Steinbauer"
 __copyright__ = "Sven Steinbauer"
@@ -205,7 +203,11 @@ def infuse(ctx, temp, target, ratio, grain, water):
     unit = "quarts"
     if is_metric(ctx):
         unit = "liters"
-    print(f"Infuse with {infusion:.2f} {unit} @ {water}{temp_unit}".format(infusion, unit, water, temp_unit))
+    print(
+        f"Infuse with {infusion:.2f} {unit} @ {water}{temp_unit}".format(
+            infusion, unit, water, temp_unit
+        )
+    )
 
 
 @main.command()
@@ -241,7 +243,9 @@ def dme(ctx, points, vol):
     if is_metric(ctx):
         amt_dme = bm.oz_to_g(amt_dme)
 
-    print(f"Add {amt_dme:.2f}{ctx.obj['units']['weight']} of DME to raise the wort gravity by {points} points")
+    print(
+        f"Add {amt_dme:.2f}{ctx.obj['units']['weight']} of DME to raise the wort gravity by {points} points"
+    )
 
 
 @main.command()
@@ -273,9 +277,7 @@ def attenuation(ctx, og, fg):
         print("Final gravity cannot be higher than original gravity")
         sys.exit(1)
 
-    print(
-        f"Apparent attenuation: {bm.apparent_attenuation(og, fg) * 100:.2f}%"
-    )
+    print(f"Apparent attenuation: {bm.apparent_attenuation(og, fg) * 100:.2f}%")
     print(f"Real attenuation: {bm.real_attenuation(og, fg) * 100:.2f}%")
 
 
@@ -302,9 +304,7 @@ def fg_from_att(ctx, og, att):
     if not valid_range(og):
         sys.exit(1)
 
-    print(
-        f"FG for {att}% attenuation: {bm.fg_from_attenuation(og, att):.3f}"
-    )
+    print(f"FG for {att}% attenuation: {bm.fg_from_attenuation(og, att):.3f}")
 
 
 @main.command()
@@ -338,9 +338,7 @@ def adjust_gravity(ctx, og, vol, ng):
     if diff >= 0:
         print(f"Boil off {diff:.2f} {ctx.obj['units']['vol']} of wort")
     else:
-        print(
-            f"Dilute wort with {diff * -1:.2f} {ctx.obj['units']['vol']} of water"
-        )
+        print(f"Dilute wort with {diff * -1:.2f} {ctx.obj['units']['vol']} of water")
 
 
 @main.command()
@@ -398,9 +396,7 @@ def strike(ctx, grain, vol, temp):
     if is_metric(ctx):
         strike_temp = bm.f_to_c(strike_temp)
 
-    print(
-        f"Strike water temp should be {strike_temp:.3f}{ctx.obj['units']['temp']}"
-    )
+    print(f"Strike water temp should be {strike_temp:.3f}{ctx.obj['units']['temp']}")
 
 
 @main.command()

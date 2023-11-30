@@ -76,7 +76,9 @@ def test_kegpsi():
 @mock_config_in_test
 def test_kegpsi_imp():
     runner = CliRunner()
-    result = runner.invoke(command_line.main, "--unit imperial kegpsi -vol 2.0 -temp 36")
+    result = runner.invoke(
+        command_line.main, "--unit imperial kegpsi -vol 2.0 -temp 36"
+    )
     assert result.exit_code == 0
     assert result.output == "Keg pressure required: 5.27psi\n"
 
@@ -125,7 +127,10 @@ def test_imperial():
     runner = CliRunner()
     result = runner.invoke(
         command_line.main,
-        ("--unit imperial infuse -temp 152 -target 168 " "-ratio 1.5 -grain 10 -water 212"),
+        (
+            "--unit imperial infuse -temp 152 -target 168 "
+            "-ratio 1.5 -grain 10 -water 212"
+        ),
     )
     assert result.exit_code == 0
     assert result.output == "Infuse with 6.18 quarts @ 212.0F\n"
@@ -142,7 +147,9 @@ def test_dme():
 @mock_config_in_test
 def test_dme_imperial():
     runner = CliRunner()
-    result = runner.invoke(command_line.main, ("--unit imperial dme -points 5 -vol 3.25"))
+    result = runner.invoke(
+        command_line.main, ("--unit imperial dme -points 5 -vol 3.25")
+    )
     assert result.exit_code == 0
     assert result.output == "Add 5.91oz of DME to raise the wort gravity by 5 points\n"
 
