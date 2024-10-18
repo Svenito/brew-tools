@@ -3,7 +3,6 @@ import click
 import sys
 import logging
 
-#from brew_tools import __version__
 __version__ = "0.4.0"
 from brew_tools import inputs
 from brew_tools import config
@@ -93,8 +92,7 @@ def main(ctx, unit):
     ),
     default=False,
 )
-@click.pass_context
-def abv(ctx, og, fg, adjust):
+def abv(og, fg, adjust):
     """
     Calculates the ABV from the original and final gravity readings. By default
     the wort and alcohol correction factor is not applied. If you are using a
