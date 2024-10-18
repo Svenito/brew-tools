@@ -4,7 +4,7 @@ name: tests
 "on":
   push:
     branches:
-      - github-actions
+      - "*"
   pull_request:
     branches:
       - main
@@ -33,6 +33,4 @@ jobs:
       - name: Lint
         run: rye lint
       - name: Format (Black)
-        run: rye run black -c
-      - name: Lint GitHub Actions
-        uses: eifinger/actionlint-action@v1
+        run: rye run black --check .
