@@ -4,7 +4,7 @@ from typing import TypeVar, Callable, List
 T = TypeVar("T")
 
 
-def get_valid_input(prompt: str, valid_range: Callable[[float], bool] | None=None):
+def get_valid_input(prompt: str, valid_range: Callable[[float], bool] | None = None):
     while True:
         user_input = input(prompt)
         try:

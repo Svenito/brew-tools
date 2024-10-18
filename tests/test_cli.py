@@ -180,6 +180,9 @@ def test_adj_vol():
 
 def test_strike_temp():
     runner = CliRunner()
-    result = runner.invoke(command_line.main, ("--unit metric strike -grain 5 -grain_temp 21 -vol 10 -temp 65"))
+    result = runner.invoke(
+        command_line.main,
+        ("--unit metric strike -grain 5 -grain_temp 21 -vol 10 -temp 65"),
+    )
     assert result.exit_code == 0
     assert result.output == ("Strike water temp should be 76.194C\n")

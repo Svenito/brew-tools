@@ -162,6 +162,7 @@ def test_strike_temp():
     strike = bm.strike_temp(14, 70, 10, 153)
     assert strike == pytest.approx(162.02, 0.01)
 
+
 def test_sg_temp_correct():
     adj = bm.gravity_temperature_correct(1.05, 120, 59)
     assert adj == pytest.approx(1.061, 0.01)
