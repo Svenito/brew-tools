@@ -6,7 +6,7 @@ __copyright__ = "Sven Steinbauer"
 __license__ = "mit"
 
 from click.testing import CliRunner
-from brew_tools import command_line
+from src.brew_tools import command_line
 import pytest
 
 

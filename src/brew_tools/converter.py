@@ -1,4 +1,4 @@
-import brew_tools.brew_maths as bm
+import brew_tools as bm
 
 
 def print_mass(value: float) -> None:

@@ -157,7 +157,7 @@ html_theme_options = {"sidebar_width": "300px", "page_width": "1200px"}
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
 try:
-    from brew_tools import __version__ as version
+    from src.brew_tools import __version__ as version
 except ImportError:
     pass
 else:

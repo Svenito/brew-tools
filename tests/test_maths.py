@@ -1,6 +1,6 @@
 import pytest
 
-from brew_tools import brew_maths as bm
+from src.brew_tools import brew_maths as bm
 
 
 def test_oz_to_g():
