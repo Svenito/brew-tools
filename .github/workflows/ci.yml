@@ -35,7 +35,7 @@ jobs:
         run: uv run pytest tests
 
       - name: Lint
-        run: rye run ruff check src tests
+        run: uv run ruff check src tests
 
       - name: Format
         run: uv run ruff format --check src tests
