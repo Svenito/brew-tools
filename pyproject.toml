@@ -34,3 +34,6 @@ allow-direct-references = true
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/brew_tools"]
+
+[tool.ruff.lint]
+ignore = ["E741"]

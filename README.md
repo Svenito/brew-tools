@@ -117,32 +117,30 @@ Development
 ===========
 
 If you want to help develop brew tools you should install it into a
-virtual environment. The current version of brew-tools uses [Poetry](https://poetry.eustace.io/)
+virtual environment. The current version of brew-tools uses [Rye](https://rye.astral.sh/) 
 to manage virtual environments and such.
 
-In order to start, [install Poetry](https://poetry.eustace.io/docs/#installation)
+In order to start, [install Rye](https://rye.astral.sh/guide/installation/)
 and change into the brew-tools directory. From there you can run
 
-    poetry install
+    rye sync
 
-which will create a virtual environment and install the dependencies.
-To run `brew_tools` in the developmeent environment it's probably easiest to run
+which will create a virtual environment and install the dependencies as well as install
+`brew_tools` to the environment.
+To run `brew_tools` in the development environment run
 
-    poetry shell
+    rye run brew_tools
 
-which will spawn a configured shell for the environment.
+Which will launch  `brew_tools`. Simply add arguments to the end of the line.
 
-Tests can be run in this environment, or you can use
+To run the tests you use
 
-    poetry run pytest tests
-
-to run the tests without spawning a shell.
+    rye test
 
 In addition to the tests it's advisable to run a linter of the source as Travis
-will also check for linting errors. The linter command ignores some errors, so you
-can use this command to match the command run by Travis
+will also check for linting errors.
 
-    poetry run flake8 src --ignore=E501,W504,W503
+    rye lint
 
 Thanks
 ======
