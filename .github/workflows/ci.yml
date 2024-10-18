@@ -19,18 +19,23 @@ jobs:
         python-version: ["3.11", "3.12"]
     steps:
       - uses: actions/checkout@v4
-      - uses: eifinger/setup-rye@v4
-        id: setup-rye
+        
+      - name: Install uv
+        uses: astral-sh/setup-uv3
         with:
-          enable-cache: true
-          cache-prefix: ${{ matrix.python-version }}
-      - name: Pin python-version ${{ matrix.python-version }}
-        run: rye pin ${{ matrix.python-version }}
-      - name: Install dependencies
-        if: steps.setup-rye.outputs.cache-hit != 'true'
-        run: |
-          rye sync --no-lock
+          version: "0.4.24"
+
+      - name: Setup Python ${{ matrix.python-version }}
+        run: uv python install ${{ matric.python-version }}
+
+      - name: Install project
+        run: uv sync --all-extras --dev
+
+      - name: Tests
+        run: uv run pytest tests
+
       - name: Lint
-        run: rye lint
-      - name: Format (Black)
-        run: rye run black --check .
+        run: rye run ruff check src tests
+
+      - name: Format
+        run: uv run ruff format --check src tests

@@ -117,30 +117,38 @@ Development
 ===========
 
 If you want to help develop brew tools you should install it into a
-virtual environment. The current version of brew-tools uses [Rye](https://rye.astral.sh/) 
+virtual environment. The current version of brew-tools uses [uv](https://docs.astral.sh/uv) 
 to manage virtual environments and such.
 
-In order to start, [install Rye](https://rye.astral.sh/guide/installation/)
+In order to start, [install uv](https://docs.astral.sh/uv/getting-started/installation/)
 and change into the brew-tools directory. From there you can run
 
-    rye sync
+    uv sync
 
 which will create a virtual environment and install the dependencies as well as install
 `brew_tools` to the environment.
 To run `brew_tools` in the development environment run
 
-    rye run brew_tools
+    uv run brew_tools
 
 Which will launch  `brew_tools`. Simply add arguments to the end of the line.
 
 To run the tests you use
 
-    rye test
+    uv run pytest tests
 
-In addition to the tests it's advisable to run a linter of the source as Travis
-will also check for linting errors.
+In addition to the tests it's advisable to run a linter of the source as Github actions
+will also check for linting and formatting errors.
 
-    rye lint
+    rye run ruff format --check src tests
+
+or if you want to format the files automatically
+
+    rye run ruff format src tests
+
+For linting use
+
+    rye run ruff check src tests
 
 Thanks
 ======

@@ -1,39 +1,25 @@
 [project]
 name = "brew-tools"
-version = "0.5.0"
-description = "Commandline tools for the homebrewer"
-authors = [
-    { name = "Sven Steinbauer", email = "sven@unlogic.co.uk" }
-]
-dependencies = [
-    "click>=8.1.7",
-    "appdirs>=1.4.4",
-]
+version = "0.1.0"
+description = "Add your description here"
 readme = "README.md"
-requires-python = ">= 3.8"
+requires-python = ">=3.12"
+dependencies = [
+    "appdirs>=1.4.4",
+    "click>=8.1.7",
+]
 
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+[tool.uv]
+dev-dependencies = [
+    "mypy>=1.12.0",
+    "pytest>=8.3.3",
+    "pytest-cov>=5.0.0",
+    "ruff>=0.7.0",
+]
+package = true
 
 [project.scripts]
 brew_tools = "brew_tools:main"
-
-[tool.rye]
-managed = true
-dev-dependencies = [
-    "pytest>=8.3.3",
-    "flake8>=7.1.1",
-    "mypy>=1.12.0",
-    "black>=24.10.0",
-    "pytest-cov>=5.0.0",
-]
-
-[tool.hatch.metadata]
-allow-direct-references = true
-
-[tool.hatch.build.targets.wheel]
-packages = ["src/brew_tools"]
 
 [tool.ruff.lint]
 ignore = ["E741"]
