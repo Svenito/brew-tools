@@ -140,15 +140,15 @@ To run the tests you use
 In addition to the tests it's advisable to run a linter of the source as Github actions
 will also check for linting and formatting errors.
 
-    rye run ruff format --check src tests
+    uv run ruff format --check src tests
 
 or if you want to format the files automatically
 
-    rye run ruff format src tests
+    uv run ruff format src tests
 
 For linting use
 
-    rye run ruff check src tests
+    uv run ruff check src tests
 
 Thanks
 ======
