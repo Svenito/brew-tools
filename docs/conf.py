@@ -53,7 +53,7 @@ try:
     if parse_version(sphinx.__version__) >= parse_version("1.7"):
         args = args[1:]
 
-    apidoc.main(args)
+    #apidoc.main(args)
 except Exception as e:
     print("Running `sphinx-apidoc` failed!\n{}".format(e))
 
