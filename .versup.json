@@ -1,0 +1,10 @@
+{
+	"files": {
+		"src/brew_tools/command_line.py": [
+			[
+				"__version__ = \"([\\d\\.]+)\"",
+				"__version__ = \"[version]\""
+			]
+		]
+	}
+}
