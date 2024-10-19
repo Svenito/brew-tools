@@ -3,7 +3,7 @@ import click
 import sys
 import logging
 
-__version__ = "0.6.0"
+__version__ = "0.6.1"
 from brew_tools import inputs
 from brew_tools import config
 import brew_tools.brew_maths as bm
